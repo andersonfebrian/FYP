@@ -15,7 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['browser.auth'])->group(function() {
+
+  // Profile
   Route::get('profile', 'ProfileController@index')->name('profile');
+  Route::get('profile/edit', 'ProfileController@edit')->name('profile.show');
+
+  Route::put('profile/{user}/update', 'ProfileController@update')->name('profile.update');
 
 
   // Route::middleware(['has.store'])->group(function() {

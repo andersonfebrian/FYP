@@ -10005,3 +10005,7 @@ h3 {
 text-white {
   color: white;
 }
+
+p, label {
+  margin: 0;
+}
