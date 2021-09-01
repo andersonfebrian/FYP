@@ -22,8 +22,10 @@
 			<label for="email">Email</label>
 			<input type="text" class="form-control mt-2" name="email" placeholder="Email" value="{{$user->email}}" disabled>
 
-			<!-- <input type="password" class="form-control mt-2" placeholder="New Password" required> -->
-
+			<label for="">Password (Not required if not changing password)</label>
+			<input type="password" class="form-control mt-2" placeholder="New Password" name="password">
+			<input type="password" class="form-control mt-2" placeholder="Confirm Password" name="password_confirmation">
+			
 			@include('browser.layouts.partials.error-message')
 			
 			<button type="submit" class="btn btn-success mt-2 form-control">Update Profile</button>

@@ -10006,6 +10006,6 @@ text-white {
   color: white;
 }
 
-p, label {
+p, label, ul {
   margin: 0;
 }
