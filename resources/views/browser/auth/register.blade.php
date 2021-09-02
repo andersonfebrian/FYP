@@ -12,15 +12,15 @@
     <form action="{{ route("browser.auth-register") }}" method="POST">
       @csrf
 
-      <input type="text" name="first_name" class="form-control mt-2" placeholder="First Name" required>
+      <input type="text" name="first_name" class="form-control mt-2" placeholder="First Name" required value="{{ old('first_name') }}">
 
-      <input type="text" name="last_name" class="form-control mt-2" placeholder="Last Name" required>
+      <input type="text" name="last_name" class="form-control mt-2" placeholder="Last Name" required value="{{ old('last_name') }}">
 
-      <input type="text" name="email" class="form-control mt-2" placeholder="Email" required>
+      <input type="text" name="email" class="form-control mt-2" placeholder="Email" required value="{{ old('email') }}">
 
       <input type="password" name="password" class="form-control mt-2" placeholder="Password" required>
 
-      @include('browser.layouts.partials.error-message')
+      @include('browser.layouts.partials.messages')
 
       <div class="row mt-2">
         <div class="col">

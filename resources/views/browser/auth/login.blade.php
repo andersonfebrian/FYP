@@ -14,7 +14,7 @@
 
       <input placeholder="Password" type="password" class="form-control mt-2" name="password" required>
       
-      @include('browser.layouts.partials.error-message')
+      @include('browser.layouts.partials.messages')
 
         <div class="row mt-2">
           <div class="col">

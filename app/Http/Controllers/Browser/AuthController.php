@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Browser;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -29,6 +30,12 @@ class AuthController extends Controller
 
 	public function logout()
 	{
+
+		Activity::create([
+			'user_id' => Auth::user()->id,
+			'activity' => 'account.logout'
+		]);
+
 		Session::flush();
 		Auth::logout();
 		return redirect()->route('browser.index');

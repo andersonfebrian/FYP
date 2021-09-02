@@ -26,7 +26,9 @@ Route::middleware(['browser.auth'])->group(function() {
   // Route::middleware(['has.store'])->group(function() {
     Route::get('store-dashboard', 'StoreController@dashboard')->name('store-dashboard');
     Route::get('store', 'StoreController@index')->name('store-index');
+
   // });
+  Route::resource('store-dashboard/products', 'StoreProductController')->name('*', 'product');
 
   Route::get('logout', 'AuthController@logout')->name('logout');
 });
