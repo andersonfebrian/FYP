@@ -37,7 +37,7 @@
 
 			<div class="mt-3">
         <label for="description">Product Description</label>
-				<textarea name="description" id="editor" required>{{ $product->description }}</textarea>
+				<textarea name="description" id="editor">{{ $product->description }}</textarea>
 			</div>
 
       <div class="mt-2 d-flex inline-block">

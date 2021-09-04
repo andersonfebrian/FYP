@@ -17,7 +17,14 @@ class HasStore
 	 */
 	public function handle(Request $request, Closure $next)
 	{
-		$response = $next($request);
-		return $response;
+		// if(Auth::user()->hasStore() && \Request::is('store/create')) {
+		// 	return redirect()->route('browser.store-dashboard');
+		// }
+
+		if(Auth::user()->hasStore()) {
+			return $next($request);
+		}
+
+		return redirect()->route('browser.store.create');
 	}
 }
