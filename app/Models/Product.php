@@ -22,7 +22,14 @@ class Product extends Model
 
 		static::deleted(function(){
 			Activity::create([
-				'activity' => 'product.delete',
+				'activity' => 'product.deleted',
+				'user_id' => Auth::id(),
+			]);
+		});
+
+		static::updated(function($product) {
+			Activity::create([
+				'activity' => 'product.updated',
 				'user_id' => Auth::id(),
 			]);
 		});

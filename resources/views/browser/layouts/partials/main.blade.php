@@ -4,6 +4,8 @@
 </head>
 <body>
   
+  @routes
+
   <div class="position-relative">
     @yield('master')
   </div>
