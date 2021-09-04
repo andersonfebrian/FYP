@@ -20,15 +20,14 @@ Route::middleware(['browser.auth'])->group(function() {
   Route::get('profile', 'ProfileController@index')->name('profile');
   Route::get('profile/edit', 'ProfileController@edit')->name('profile.show');
 
-  Route::put('profile/{user}/update', 'ProfileController@update')->name('profile.update');
+  Route::put('profile/{user}/update', 'ProfileController@update')->name('profile.update');  
+  
+  Route::get('store/create', 'StoreController@create')->name('store.create');
 
-
-  // Route::middleware(['has.store'])->group(function() {
-    Route::get('store-dashboard', 'StoreController@dashboard')->name('store-dashboard');
-    Route::get('store', 'StoreController@index')->name('store-index');
-
-  // });
-  Route::resource('store-dashboard/products', 'StoreProductController')->name('*', 'product');
+  Route::middleware(['has.store'])->group(function() {
+    Route::get('store-dashboard', 'StoreDashboardController@index')->name('store-dashboard');
+    Route::resource('store-dashboard/products', 'StoreDashboardProductController')->name('*', 'product');
+  });
 
   Route::get('logout', 'AuthController@logout')->name('logout');
 });

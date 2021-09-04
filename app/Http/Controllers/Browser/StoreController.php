@@ -11,21 +11,12 @@ class StoreController extends Controller
 
 	public function __construct(){}
 
-	public function dashboard() {
-
-		if(!Auth::user()->hasStore()) {
-			return redirect('store');
-		}
-
-		return view('browser.profile.store-index');
-	}
-
-	public function index() {
+	public function create() {
 
 		if(Auth::user()->hasStore()) {
-			return redirect('store-dashboard');
+			return redirect()->route('browser.store-dashboard');
 		}
 
-		return view('browser.store.index');
+		return view('browser.store.create');
 	}
 }

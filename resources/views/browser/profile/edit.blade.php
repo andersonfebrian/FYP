@@ -26,7 +26,7 @@
 			<input type="password" class="form-control mt-2" placeholder="New Password" name="password">
 			<input type="password" class="form-control mt-2" placeholder="Confirm Password" name="password_confirmation">
 			
-			@include('browser.layouts.partials.error-message')
+			@include('browser.layouts.partials.messages')
 			
 			<button type="submit" class="btn btn-success mt-2 form-control">Update Profile</button>
 		</form>
