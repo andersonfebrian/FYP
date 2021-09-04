@@ -2,19 +2,36 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class StoreProductIndexComponent extends Component
 {
+	use WithPagination;
 
-	public $products;
+	public $search = '';
+
+	protected $paginationTheme = 'bootstrap';
+
+	protected $listeners = ['refreshComponent' => '$refresh', 'deleteProduct'];
+
+	public function deleteProduct(Product $product) {
+		$product->delete();
+		return $this->emitSelf('refreshComponent');
+	}
+
+	public function updatingSearch() {
+		$this->resetPage();
+	}
 
 	public function mount() {
-		$this->products = user_store()->products;
+
 	}
 
 	public function render()
 	{
-		return view('livewire.store-product-index-component', ['products' => $this->products]);
+		$products = user_store()->products()->where('name', 'like', '%'.$this->search.'%')->paginate(5);
+		return view('livewire.store-product-index-component', ['products' => $products]);
 	}
 }

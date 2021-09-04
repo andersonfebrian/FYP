@@ -7,6 +7,13 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+//SweetAlert2
+@import '~sweetalert2/src/sweetalert2.scss';
+
+//FontAwesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+
+
 text-white {
   color: white;
 }
@@ -25,4 +32,8 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+.ck-editor__editable_inline {
+  min-height: 250px;
 }

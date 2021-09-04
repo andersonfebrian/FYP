@@ -1,5 +1,9 @@
 window._ = require('lodash');
 
+window.Swal = require('sweetalert2');
+window.ckeditor = require('@ckeditor/ckeditor5-build-classic');
+
+require('@fortawesome/fontawesome-free/js/all');
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
@@ -12,6 +16,11 @@ try {
 
     require('bootstrap');
 } catch (e) {}
+
+ckeditor.create(document.querySelector('#editor')).then((editor) => {
+    console.log(editor);
+}).catch((err) => {
+});
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

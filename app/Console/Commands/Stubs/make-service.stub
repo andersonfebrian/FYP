@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Http\Request;
+
+class DummyClass {
+
+    public function store(Request $request){
+
+    }
+
+    public function update(Request $request) {
+
+    }
+
+}
