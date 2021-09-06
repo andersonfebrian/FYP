@@ -1,16 +1,26 @@
-composer install 
+<h3>Software Prerequisites</h3>
+<ol>
+    <li> XAMPP (includes PHP, Apache, MySQL) - https://www.apachefriends.org/download.html </li>
+    <li> Composer - https://getcomposer.org/download/ </li>
+    <li> Node/NPM - https://nodejs.org/en/download/ </li>
+    <li> Git - https://git-scm.com/downloads </li>
+</ol>
 
-npm install
+<h3>Setup Project Locally</h3>
 
-cp .env.example .env
+1. Clone Project to local machine (Preferably to <em>xampp/htdocs</em> folder) - `git clone `  
+2. Install Dependencies - `composer install` and `npm install` and `npm run dev`
+3. Create <em>.env</em> file - `cp .env.example .env`  
+    3.1  
+    3.2
+4. `php artisan key:generate`  
+5. `php artisan storage:link`
+6. `php artisan migrate`  
 
-php artisan key:generate
+<h3>Local Deployment</h3>  
 
-php artisan storage:link
+1. locate <em>hosts</em> file located under `C:\Windows\System32\drivers\etc\` and add the following: `127.0.0.1 fyp.test`  
 
-php artisan migrate
-
-php artisan serve
 
 Notes:
 
