@@ -16,7 +16,8 @@ class RegisterController extends Controller
 			'first_name' => 'required',
 			'last_name' => 'required',
 			'email' => 'required|email|unique:users',
-			'password' => 'required|min:6'
+			'password' => 'required|min:6',
+			'enable_biosecure' => 'boolean'
 		]);
 
 		$data = $request->only(['first_name', 'last_name', 'password', 'email']);
@@ -26,7 +27,7 @@ class RegisterController extends Controller
 			'first_name' => $request->first_name, 
 			'last_name' => $request->last_name, 
 			'password' => Hash::make($request->password), 
-			'biosecure_enabled' => 0
+			'biosecure_enabled' => $request->enable_biosecure ?? false
 		]);
 
 		Auth::loginUsingId($user->id);
