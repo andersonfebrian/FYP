@@ -50,6 +50,8 @@ class RouteServiceProvider extends ServiceProvider
 			->namespace($this->browserNamespace)
 			->middleware('web')
 			->group(base_path('routes/browser/web.php'));
+		
+		Route::domain(env('APP_URL'))->prefix('api')->name('browser.api.')->namespace($this->browserNamespace)->middleware('api')->group(base_path('routes/browser/api.php'));
 	}
 
 	protected function mapAdminRoute()
