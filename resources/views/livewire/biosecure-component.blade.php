@@ -44,7 +44,6 @@
 
 			canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, canvas.width, canvas.height);
 			let img = canvas.toDataURL("image/png");
-			console.log(img);
 			return img;
 		}
 
@@ -64,7 +63,7 @@
 							i++;
 						}).catch(err => console.log(err));
 
-						if(i == 10) {
+						if(i == 1) {
 							clearInterval(sendFrame);
 							axios.post(route('browser.api.biosecure.image-processing'), {
 								'user': @this.user,
