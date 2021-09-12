@@ -4,6 +4,7 @@
     <li> Composer - https://getcomposer.org/download/ </li>
     <li> Node/NPM - https://nodejs.org/en/download/ </li>
     <li> Git - https://git-scm.com/downloads </li>
+    <li> Python and Pip </li>
 </ol>
 
 <h3>Setup Project Locally</h3>
@@ -16,6 +17,10 @@
 4. `php artisan key:generate`  
 5. `php artisan storage:link`
 6. `php artisan migrate`  
+
+<h3>Python Dependencies (MAKE SURE INSTALLED ON MACHINE) </h3>  
+
+1. `pip install opencv-python`
 
 <h3>Local Deployment</h3>  
 
