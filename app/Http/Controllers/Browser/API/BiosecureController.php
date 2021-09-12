@@ -27,23 +27,15 @@ class BiosecureController extends Controller
 	}
 
 	public function initScript(Request $request) {
-		// not ideal, but ok
-		$process = Process::fromShellCommandline(env('PYTHON_DIR').'Scripts\pip install opencv-python && ' . env('PYTHON_DIR').'Scripts\pip install numpy');
+
+		$user = strtolower($request->user['first_name'].'_'.strtolower($request->user['last_name'].'_'.$request->email));
+		$process = new Process([env('PYTHON_DIR'), base_path('py_scripts\\biosecure.py'), 'api', base_path(), storage_path('app\\biosecure\\'.$user)]);
 
 		$process->run();
 
 		if(!$process->isSuccessful()) {
 			throw new ProcessFailedException($process);
-		}
-
-		logger($process->getOutput());
-
-		$process = new Process([env('PYTHON_DIR').'python', base_path('py_scripts/biosecure.py')]);
-
-		$process->run();
-
-		if(!$process->isSuccessful()) {
-			throw new ProcessFailedException($process);
+			return response()->json(['message' => 'Something went wrong on our end. Please try again later.'], 500);
 		}
 
 		logger($process->getOutput());

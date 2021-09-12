@@ -63,18 +63,20 @@
 							i++;
 						}).catch(err => console.log(err));
 
-						if(i == 1) {
+						if(i == 5) {
 							clearInterval(sendFrame);
-							axios.post(route('browser.api.biosecure.image-processing'), {
-								'user': @this.user,
-								'email': @this.email
-							}).then(res => {
+							setTimeout(()=>{
+								axios.post(route('browser.api.biosecure.image-processing'), {
+									'user': @this.user,
+									'email': @this.email
+								}).then(res => {
 
-							}).catch(err => console.log(err));
+								}).catch(err => console.log(err));
+							}, 1500);
 							console.log('break from capturing frame');
 						}
 
-					}, 2500);
+					}, 1500);
 				}
 			}).catch(err => console.log(err));
 		}
