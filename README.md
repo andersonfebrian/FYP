@@ -20,7 +20,7 @@
 
 <h3>Python Dependencies (MAKE SURE INSTALLED ON MACHINE) </h3>  
 
-1. `pip install opencv-python`
+1. `pip install opencv-contrib-python`
 
 <h3>Local Deployment</h3>  
 
