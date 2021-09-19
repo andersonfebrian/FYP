@@ -2,51 +2,94 @@ import os
 import sys
 import cv2 as cv
 import numpy as np
-import glob
+import shutil
+
+HAAR_FRONTALFACE = 0
+HAAR_EYE = 1
+HAAR_EYE_GLASSES = 2
 
 def convertToGrayscale(image):
     return cv.cvtColor(image, cv.COLOR_BGR2GRAY)
 
-# Returns the image with bounding box around the face if found, and return number of faces found
-'''
-    1. image passed to face detection function
-    2. face detected ? save to processed folder and remove from user root folder : remove from user root folder
-    3. pass processed image to facial recognition
-'''
-def face_detection(img_path, cascade, scaleFactor=1.1):
-    src = cv.imread(img_path)
+def is_grayscale(image_src):
+    return True if len(image_src.shape) == 1 else False
+
+def detection(img_src, cascade, scale_factor = 1.1, min_neighbor = 5):
+    """@param img_src Path to the image \n @param cascade The loaded cascade type from haar_cascade() \n @param scale_factor \n @returns src Loaded Image from cv.imread() \n @returns detected_region [Tuple] Region Of Interest \n @returns img_path"""
+    try:
+        if isinstance(img_src, str):
+            src = cv.imread(img_src)
+        else:
+            src = img_src
+    except:
+        pass
 
     gray = convertToGrayscale(src)
 
-    faces = cascade.detectMultiScale(gray, scaleFactor=scaleFactor, minNeighbors=5)
+    detected_region = cascade.detectMultiScale(gray, scaleFactor = scale_factor, minNeighbors = min_neighbor)
 
-    print(faces)
+    return src, detected_region
 
-    if len(faces) > 0:
-        for(x, y, w, h) in faces:
-            cv.rectangle(src, (x, y), (x+w, y+h), (0, 255, 0), 1)
+def draw_bounding_box(img_src, roi, color = (0, 255, 0), thickness = 1):
+    """@param img_src \n @param roi \n @param color \n @param thickness \n @return image"""
+    image = img_src.copy()
 
-        try:
-            if not os.path.exists(sys.argv[3] + "\processed"):
-                os.makedirs(os.path.abspath(sys.argv[3] + "\processed"))
+    for (x, y, w, h) in roi:
+        cv.rectangle(image, (x, y), (x+w, y+h), color = color, thickness = thickness)
 
-            cv.imwrite(sys.argv[3] + '\processed\\' + os.path.basename(img_path), src)
+    return image
 
-            print("face found and processed")
+def face_alignment(img_src):
 
-            os.remove(img_path)
+    image_copy = img_src.copy()
 
-        except Exception as e:
-            print(e)
-            
+    _, eye_roi = detection(image_copy, haar_cascade(cascade=HAAR_EYE))
+
+    eyes = eye_roi[:2]
+
+    if eyes[0][0] < eyes[1][0]:
+        left_eye, right_eye = eyes
     else:
-       print("face not found, remove")
-       os.remove(img_path)
+        right_eye, left_eye = eyes
 
-    return src, len(faces)
+    left_eye_center = ( int(left_eye[0] + (left_eye[2]/2)), int(left_eye[1] + (left_eye[3]/2)) )
+    left_x, left_y = left_eye_center
+    right_eye_center = ( int(right_eye[0] + (right_eye[2]/2)), int(right_eye[1] + (right_eye[3]/2)) )
+    right_x, right_y = right_eye_center
 
-def haar_cascade():
-    return cv.CascadeClassifier(os.path.abspath(sys.argv[2] + '\\py_scripts\\haarcascade_frontalface_default.xml'))
+    if left_y > right_y:
+        point = (right_x, left_y)
+        direction = -1
+    else:
+        point = (left_x, right_y)
+        direction = 1
+
+    delta_x = right_x - left_x
+    delta_y = right_y - left_y
+    angle = np.arctan(delta_y/delta_x)
+    angle = (angle * 180) / np.pi
+
+    h, w = image_copy.shape[:2]
+
+    center = (w//2, h//2)
+
+    m = cv.getRotationMatrix2D(center, angle, 1.0)
+    aligned = cv.warpAffine(image_copy, m, (w,h))
+
+    return aligned, eyes
+
+def haar_cascade(cascade = HAAR_FRONTALFACE):
+    if(cascade == 0):
+        file = "haarcascade_frontalface_default.xml"
+
+    if(cascade == 1):
+        file = "haarcascade_eye.xml"
+    
+    if cascade == 2:
+        file = "haarcascade_eye_tree_eyeglasses.xml"
+
+    # if len(sys.argv) > 1 temp fix for both use in local and api calls
+    return cv.CascadeClassifier(os.path.abspath(sys.argv[2] + '\\py_scripts\\' + f"{file}")) if (len(sys.argv) > 1) else cv.CascadeClassifier(os.path.abspath(file))
 
 def raw_frames():
     if(os.getcwd() != sys.argv[3]):
@@ -60,20 +103,155 @@ def raw_frames():
             
     return image
 
-def main():
+def split():
+    images = raw_frames()
+    testing = images[:25]
+    training = images[25:]
+    return testing, training
+
+def remove_raw_frame(file:str):
+    os.remove(file)
+    return True if os.path.exists(file) else False
+
+def process_raw_data(raw_image_data:list, processed_folder = "training"):
+
+    if not os.path.exists(os.path.join(sys.argv[3], f"{processed_folder}")):
+        os.mkdir(os.path.join(sys.argv[3], f"{processed_folder}"))
+
+    for index, image in enumerate(raw_image_data):
+        img = cv.imread(image)
+        try:
+
+            img_copy = img.copy()
+
+            _, face_org_roi = detection(img_copy, haar_cascade())
+
+            aligned, eyes_roi = face_alignment(img)
+
+            aligned, face_roi = detection(aligned, haar_cascade())
+
+            if len(eyes_roi) == 2 and len(face_roi) == 1: 
+                # aligned = draw_bounding_box(aligned, eyes_roi)
+                # aligned = draw_bounding_box(aligned, face_roi)
+
+                x, y, w, h = face_roi[0]
+                x2, y2, w2, h2 = face_roi[0]
+
+                aligned_cropped = aligned[y:y+h, x:x+w]
+                original_cropped = img_copy[y2:y2+h2, x2:x2+w2]
+
+                #concat_hor = np.concatenate((original_cropped, aligned_cropped), axis=1)
+
+                cv.imwrite(os.path.join(sys.argv[3] + f"\\{processed_folder}\\", os.path.basename(image)), aligned_cropped)
+
+                #cv.imshow(f"{index}", concat_hor)
+
+                remove_raw_frame(image)
+            else:
+                flag = remove_raw_frame(image)
+        except Exception as e:
+            flag = remove_raw_frame(image)
+
+def load_training_data():
+    """Returns list of training images using the cv.imread() function"""
+    loaded_data = []
+    labels = []
+
+    if os.getcwd() != (sys.argv[3] + "\\training"):
+        os.chdir(sys.argv[3] + "\\training")
+
+    for index, image in enumerate(os.listdir(sys.argv[3] + "\\training\\")):
+        img = cv.imread(os.path.join(sys.argv[3] + "\\training\\", image), cv.IMREAD_GRAYSCALE)
+        loaded_data.append(img)
+        labels.append(1)
+
+    return loaded_data, labels
+
+def load_testing_data(as_grayscale = False):
+
+    loaded_data = []
+    image_paths = []
+
+    if os.getcwd() != (sys.argv[3] + "\\testing"):
+        os.chdir(sys.argv[3] + "\\testing")
+
+    for index, image in enumerate(os.listdir(sys.argv[3] + "\\testing\\")):
+        img = cv.imread(os.path.join(sys.argv[3] + "\\testing\\", image), cv.IMREAD_GRAYSCALE) if as_grayscale == True else cv.imread(os.path.join(sys.argv[3] + "\\testing\\", image))
+        loaded_data.append(img)
+        image_paths.append(os.path.join(sys.argv[3] + "\\testing\\", image))
+
+    return loaded_data, image_paths
+
+def move_to_training(file:str):
+    shutil.move(file, sys.argv[3] + "\\training")
+    pass
+
+def train_recognizer():
+    training_data, labels = load_training_data()
+    face_recognizer = cv.face.LBPHFaceRecognizer_create()
+    face_recognizer.train(training_data, np.array(labels))
+    return face_recognizer
+
+def predict(trained_recognizer, image_src):
+    """image source passed should be of Grayscale Image"""
+    if isinstance(image_src, str):
+        try:
+            image_src = cv.imread(image_src, cv.COLOR_BGR2GRAY)
+        except Exception as e:
+            pass
+    
     try:
-        images = raw_frames()
-
-        for (index, img_path) in enumerate(images):
-
-            face, count = face_detection(os.path.abspath(img_path), haar_cascade())
-
-            #print(img_path, index, f"face count-{count}")
-
-
+        if not is_grayscale(image_src):
+            image_src = convertToGrayscale(image_src)
     except:
         pass
 
+    label, confidence = trained_recognizer.predict(image_src)
+    return label, confidence
+
+def biosecure():
+
+    testing, training = split()
+
+    process_raw_data(training)
+    process_raw_data(testing, processed_folder="testing")
+
+    face_recognizer = train_recognizer()
+
+
+    testing_data, path = load_testing_data()
+
+    # name = ["", "Anderson Febrian"]
+
+    test_image_confidence_counter = 0
+
+    for index, testing in enumerate(testing_data):
+        try:
+
+            label, confidence = predict(face_recognizer, testing)
+            #print(f"{index} - {confidence}")
+
+            if confidence > 20:
+                remove_raw_frame(path[index])
+            else:
+                test_image_confidence_counter+=1
+                move_to_training(path[index])
+            
+        except Exception as e:
+            pass
+    #print(test_image_confidence_counter)
+    if test_image_confidence_counter >= 1:
+        print('{"message":"success", "status":201}')
+    else:
+        print('{"message":"error", "status":400}')
+    # https://docs.opencv.org/4.5.0/dd/d65/classcv_1_1face_1_1FaceRecognizer.html#ab0d593e53ebd9a0f350c989fcac7f251
+
+def main():
+    biosecure()
+    pass
+
+    #print('{"message":"hello"}',end="")
+    
 
 if __name__ == "__main__":
     main()

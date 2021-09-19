@@ -58,25 +58,28 @@
 							'base64_str' : captureFrame(),
 							'user': @this.user,
 							'email': @this.email,
-						}).then((res) => {
-							console.log(res);
-							i++;
-						}).catch(err => console.log(err));
+						}).then((res) => i++).catch((err)=>{});
 
-						if(i == 5) {
+						if(i == 100) {
 							clearInterval(sendFrame);
 							setTimeout(()=>{
 								axios.post(route('browser.api.biosecure.image-processing'), {
 									'user': @this.user,
 									'email': @this.email
 								}).then(res => {
-
-								}).catch(err => console.log(err));
+									console.log(res.status);
+									if(res.status == 201) {
+										window.livewire.emit("registered");
+									}
+								}).catch((err)=>{ console.log(err); });
+								window.livewire.emit('stop');
+								Swal.fire({
+									title: "Training our AI model. Please wait..."
+								});
 							}, 1500);
-							console.log('break from capturing frame');
 						}
 
-					}, 1500);
+					}, 200);
 				}
 			}).catch(err => console.log(err));
 		}
