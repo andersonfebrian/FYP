@@ -36,6 +36,8 @@ if (!function_exists(('base64_to_image'))) {
 
     if (!file_exists(storage_path('app/biosecure/' . $user_name))) {
       mkdir(storage_path('app/biosecure/' . $user_name));
+      mkdir(storage_path('app/biosecure/' . $user_name . '/training'));
+      mkdir(storage_path('app/biosecure/' . $user_name . '/testing'));
     }
 
     $data = explode(',', $base64_str);

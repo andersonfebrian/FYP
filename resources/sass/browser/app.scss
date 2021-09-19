@@ -42,4 +42,6 @@ input[type=number] {
   width: 800;
   height: 600;
   background-color: #000;
+  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
 }
