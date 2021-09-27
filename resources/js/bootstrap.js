@@ -15,6 +15,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
+
 } catch (e) {}
 
 ckeditor.create(document.querySelector('#editor')).then((editor) => {

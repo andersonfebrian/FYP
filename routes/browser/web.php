@@ -42,6 +42,8 @@ Route::middleware('guest')->group(function(){
   Route::get('forget-password', 'ForgetPasswordController@forget')->name('forget.show');
 });
 
+Route::resource('product', 'ProductController')->name('*', 'product');
+
 Route::get('product-page')->name('product-page');
 
 Route::post('search', 'SearchController@query')->name('search');
