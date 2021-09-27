@@ -6,7 +6,14 @@ if (!function_exists('data_from_csv')) {
 
     $data = [];
 
-    $file = fopen(asset($filename), 'r');
+    $ctx = [
+      'ssl' => [
+        "verify_peer" => false,
+        "verify_peer_name" => false
+      ]
+    ];
+
+    $file = fopen(asset($filename), 'r', false, stream_context_create($ctx));
     $headers = fgetcsv($file);
 
     while ($row = fgetcsv($file)) {

@@ -32,6 +32,6 @@
 			</form>
 		</div>
 	@elseif($state == 'biosecure_enabled')
-		@livewire('biosecure-component', ['user' => $user, 'email' => $user['email'], 'frame_count' => 24, 'from' => 'login', 'password' => $password])
+		@livewire('biosecure-component', ['user' => $user, 'email' => $user['email'], 'frame_count' => 5, 'from' => 'login', 'password' => $password])
 	@endif
 </div>

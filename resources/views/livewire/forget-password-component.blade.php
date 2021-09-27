@@ -17,7 +17,7 @@
             </form>
         </div>
     @elseif($state == 'biosecure_enabled')
-        @livewire('biosecure-component', ['user' => $user, 'email' => $user['email'], 'from' => 'forget-password', 'frame_count' => 24])
+        @livewire('biosecure-component', ['user' => $user, 'email' => $user['email'], 'from' => 'forget-password', 'frame_count' => 5])
     @elseif($state == 'reset_password')
         <h2>Reset Password</h2>
         <div>
