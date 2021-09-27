@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class BiosecureComponent extends Component
@@ -12,28 +13,26 @@ class BiosecureComponent extends Component
 
 	public $user;
 	public $email;
+	public $password;
 
-	protected $listeners = ['biosecure', 'changeState', 'refreshComponent' => '$refresh', 'registered'];
+	public $frame_count = 0;
+	public $from = "login";
 
-	public function changeState() {
-		dd('listened');
-	}
+	protected $listeners = ['refresh' => '$refresh', 'registered', 'login'];
 
 	public function registered() {
-		// dd('registered');
-		$user = User::where('email', $this->email)->first();
-		
-		Auth::loginUsingId($user->id);
-
-		//session()->flash('success', 'Successfully Registered. Please login to Proceed');
+		session()->flash('success', 'Successfully Registered. Please login to Proceed');
 
 		return redirect()->route('browser.login.show');
 	}
 
-	public function biosecure()
-	{
-		//dd('listened');
-		return $this->emit('refreshComponent');
+	public function login(){
+		if(Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+			return redirect()->intended();
+		} else {			
+			session()->flash('error', 'Incorrect Email or Password entered.');
+			return redirect()->route('browser.login.show');
+		}
 	}
 
 	public function mount($user, $email) {

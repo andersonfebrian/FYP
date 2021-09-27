@@ -14,6 +14,7 @@ use Symfony\Component\Process\Process;
 class BiosecureController extends Controller
 {
 	public function storeFrame(Request $request) {
+		//logger($request);
 		$request->validate([
 			'base64_str' => 'required|string'
 		]);
@@ -24,9 +25,10 @@ class BiosecureController extends Controller
 	}
 
 	public function initScript(Request $request) {
+		logger($request);
 
 		$user = strtolower($request->user['first_name'].'_'.strtolower($request->user['last_name'].'_'.$request->email));
-		$process = new Process([env('PYTHON_DIR'), base_path('py_scripts\\biosecure.py'), 'api', base_path(), storage_path('app\\biosecure\\'.$user)]);
+		$process = new Process([env('PYTHON_DIR'), base_path('py_scripts\\biosecure.py'), $request->from, base_path(), storage_path('app\\biosecure\\'.$user)]);
 		$process->setTimeout(120);
 		$process->run();
 
@@ -35,12 +37,12 @@ class BiosecureController extends Controller
 			return response()->json(['message' => 'Something went wrong on our end. Please try again later.'], 500);
 		}
 
-		//logger($process->getOutput());
+		// //logger($process->getOutput());
 
 		$data = $process->getOutput();
 		$data = json_decode($data, true);
 
-		if($data['status'] == 201) {
+		if($data['status'] == 201 && $request->from == "register") {
 			$this->register($request->user, $request->email);
 		}
 		

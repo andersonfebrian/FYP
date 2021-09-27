@@ -1,135 +1,164 @@
-<div>
-	{{ $user['first_name'] }}
-	<div class="d-flex justify-content-center">
-		<h3>Face Recognition</h3>
-	</div>
-	<div class="d-flex justify-content-center">
-		<video autoplay id="video_element"></video>
-		<canvas class="d-none"></canvas>
-	</div>
-	<div class="d-flex inline-block mt-2">
-		<p>Select Input Device</p>
-		<div id="input_devices"></div>
-		<p class="d-none" style="color:red;">It looks like you do not have an input device or you have not allowed access to input device, please check and refresh page</p>
-	</div>
-	<button wire:click="$emit('getInputDevices')"><i class="far fa-redo"></i></button>
-	<button wire:click="$emit('start')">Start</button>
-	<button wire:click="$emit('stop')">Stop</button>
+<div class="container mt-2">
+    <div class="d-flex justify-content-center">
+        <h3>Face Recognition</h3>
+    </div>
+    <div class="d-flex justify-content-center">
+        <video autoplay id="video_element"></video>
+        <canvas class="d-none"></canvas>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+        <button wire:click="$emit('start')" class="btn btn-secondary">Start</button>
+    </div>
 
-	<script>
-		// TODO: stop video playback when back button is pressed
-		// Not Ideal, but ok
-		let vStream;
+    <script>
+        // Not Ideal, but ok
+        let vStream;
 
-		let data = [];
+        let data = [];
 
-		let params = {
-			audio: false,
-			video: {
-				width: 800,
-				height: 600,
-			}
-		};
+        let params = {
+            audio: false,
+            video: {
+                width: 800,
+                height: 600,
+            }
+        };
 
-		let video = document.querySelector('#video_element');
-		let canvas = document.querySelector('canvas');
+        let video = document.querySelector('#video_element');
+        let canvas = document.querySelector('canvas');
 
-		canvas.width = 800;
-		canvas.height = 600;
+        canvas.width = 800;
+        canvas.height = 600;
 
-		function captureFrame() {
+        function captureFrame() {
 
-			canvas.width = video.videoWidth;
-			canvas.height = video.videoHeight;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
 
-			canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, canvas.width, canvas.height);
-			let img = canvas.toDataURL("image/png");
-			return img;
-		}
+            canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, canvas.width, canvas
+                .height);
+            let img = canvas.toDataURL("image/png");
+            return img;
+        }
 
-		function initDevice(params) {
-			navigator.mediaDevices.getUserMedia(params).then((stream) => {
-				video.srcObject = vStream = stream;
-				if(stream.active) {
-					// send image here
-					let i = 1;
-					const sendFrame = setInterval(() => {
-						axios.post(route('browser.api.biosecure.store-frame'), {
-							'base64_str' : captureFrame(),
-							'user': @this.user,
-							'email': @this.email,
-						}).then((res) => i++).catch((err)=>{});
+        function initDevice(params) {
+            navigator.mediaDevices.getUserMedia(params).then((stream) => {
+                video.srcObject = vStream = stream;
+                if (stream.active) {
+                    let i = 1;
+                    const sendFrame = setInterval(() => {
+                        axios.post(route('browser.api.biosecure.store-frame'), {
+                            'base64_str': captureFrame(),
+                            'user': @this.user,
+                            'email': @this.email,
+                        }).then((res) => i++).catch((err) => clearInterval(sendFrame));
 
-						if(i == 100) {
-							clearInterval(sendFrame);
-							setTimeout(()=>{
-								axios.post(route('browser.api.biosecure.image-processing'), {
-									'user': @this.user,
-									'email': @this.email
-								}).then(res => {
-									console.log(res.status);
-									if(res.status == 201) {
-										window.livewire.emit("registered");
-									}
-								}).catch((err)=>{ console.log(err); });
-								window.livewire.emit('stop');
-								Swal.fire({
-									title: "Training our AI model. Please wait..."
-								});
-							}, 1500);
-						}
+                        if (i >= @this.frame_count) {
+                            clearInterval(sendFrame);
+                            setTimeout(() => {
+                                axios.post(route('browser.api.biosecure.image-processing'), {
+                                    'user': @this.user,
+                                    'email': @this.email,
+                                    'from': @this.from
+                                }).then(res => {
+                                    if (res.status == 201 && @this.from == "register") {
+                                        window.livewire.emit("registered");
+                                    }
 
-					}, 200);
-				}
-			}).catch(err => console.log(err));
-		}
+                                    if (res.status == 200 && @this.from == "login") {
+                                        window.livewire.emit('login');
+                                    }
 
-		async function getInputDevices() {
-			const devices = await navigator.mediaDevices.enumerateDevices();
-			return devices;
-		}
+                                    if (res.status == 200 && @this.from ==
+                                        "forget-password") {
+                                        window.livewire.emitTo('forget-password-component',
+                                            'changeState', 'reset_password');
+                                    }
+                                }).catch((err) => Swal.fire({
+									toast:true,
+									title: 'Failed Verification.',
+									text: 'Our system failed to verify your identity. Please try again using the button below. If error persists, contact customer support.',
+									confirmButtonColor: "#00802b",
+                                }));
+                                window.livewire.emit('stop');
+                                Swal.fire({
+									//TODO:
+                                    title: "Training our AI model. Please wait..."
+                                });
+                            }, 1500);
+                        }
 
-		function changeInputDevice(deviceId) {
-			params['video']['deviceId'] = deviceId;
-			initDevice(params);
-		}
+                    }, 200);
+                }
+            }).catch(err => console.log('unable to store image to server'));
+        }
 
-		window.livewire.on('start', () => {
-			initDevice(params);
-		});
+        async function getInputDevices() {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            return devices;
+        }
 
-		window.livewire.on('stop', () => {
-			console.log('stop');
-			vStream.getTracks().forEach((track) => {
-				track.stop();
-			});
-		});
-		
-		window.livewire.on('changeInputDevice', () => {
-			changeInputDevice(deviceId);
-		});
+        function changeInputDevice(deviceId) {
+            params['video']['deviceId'] = deviceId;
+            initDevice(params);
+        }
 
-		window.livewire.on('getInputDevices', () => {
-			getInputDevices().then(res => {
-				let videoInputDevices = [];
-				let inputDevicesDOM = document.querySelector('#input_devices');
+        window.livewire.on('start', () => {
+            initDevice(params);
+        });
 
-				inputDevicesDOM.innerHTML = '';
+        window.livewire.on('stop', () => {
+            vStream.getTracks().forEach((track) => {
+                track.stop();
+            });
+        });
 
-				res.forEach((el, key) => {
-					if(el['kind'] == 'videoinput' && el['deviceId'] != '') {
-						let li = document.createElement('li');
-						li.innerHTML = `${el['deviceId']}`;
-						inputDevicesDOM.appendChild(li);
-					}
-				});
-			}).catch((err) => console.log(err));
-		});
+        window.livewire.on('changeInputDevice', () => {
+            changeInputDevice(deviceId);
+        });
 
-		$('document').ready(function() {
-			// initDevice(params);
-			// getInputDevices().then(res => console.log(res));
-			window.livewire.emit('getInputDevices');
-		});
-	</script>
+        window.livewire.on('getInputDevices', () => {
+            getInputDevices().then(res => {
+                let videoInputDevices = [];
+                let inputDevicesDOM = document.querySelector('#input_devices');
+
+                inputDevicesDOM.innerHTML = '';
+
+                res.forEach((el, key) => {
+                    if (el['kind'] == 'videoinput' && el['deviceId'] != '') {
+                        let li = document.createElement('li');
+                        li.innerHTML = `${el['deviceId']}`;
+                        inputDevicesDOM.appendChild(li);
+                    }
+                });
+            }).catch((err) => console.log(err));
+        });
+
+        $('document').ready(function() {
+            Swal.fire({
+                icon: "warning",
+                title: "Get Ready!",
+                text: "We will be capturing your facial features! Make sure you are in the frame!",
+                confirmButtonText: "Ready!",
+                confirmButtonColor: "green",
+                showCancelButton: true,
+                cancelButtonColor: "gray",
+                cancelButtonText: "Not Ready",
+                reverseButtons: true,
+                allowOutsideClick: false,
+                allowEnterKey: false,
+                allowEscapeKey: false
+            }).then((res) => {
+                console.log(res);
+                if (res.value) {
+                    initDevice(params);
+                } else {
+                    console.log("user is not ready!");
+                    Swal.fire({
+                        text: "You can start the camera by clicking the Start button below!"
+                    });
+                }
+            });
+        });
+    </script>
 </div>
