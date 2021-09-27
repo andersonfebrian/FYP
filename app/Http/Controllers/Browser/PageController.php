@@ -13,7 +13,7 @@ class PageController extends Controller
 	public function index()
 	{
 
-		$products = Product::all();
+		$products = Product::where('is_public', 1)->get();
 
 
 		return view(self::PATH . 'home', ['products' => $products]);

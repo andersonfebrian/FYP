@@ -17459,3 +17459,35 @@ input[type=number] {
     transform: rotate(360deg);
   }
 }
+.star-color {
+  color: #ffa534;
+}
+
+.splide__pagination__page.is-active {
+  transform: scale(1.4);
+  background: #000 !important;
+}
+
+.rounded-top-left-3 {
+  border-top-left-radius: 1rem !important;
+}
+
+.rounded-top-right-3 {
+  border-top-right-radius: 1rem !important;
+}
+
+.rounded-bottom-right-3 {
+  border-bottom-right-radius: 1rem !important;
+}
+
+.rounded-bottom-left-3 {
+  border-bottom-left-radius: 1rem !important;
+}
+
+.rounded-3 {
+  border-radius: 1rem !important;
+}
+
+.card-img-top {
+  height: 10rem !important;
+}
