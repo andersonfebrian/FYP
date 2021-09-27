@@ -50,7 +50,6 @@ class AccountRegisterComponent extends Component
 		$this->validate();
 
 		if (isset($this->user['biosecure_enabled']) && $this->user['biosecure_enabled']) {
-			$this->emit('biosecure');
 			return $this->changeState("biosecure_enabled");
 		}
 

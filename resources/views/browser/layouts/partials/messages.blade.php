@@ -13,3 +13,9 @@
     <p>{{session('success')}}</p>
   </div>
 @endif
+
+@if(session()->has('error'))
+  <div class="alert alert-danger mt-2">
+    <p>{{ session('error') }}</p>
+  </div>
+@endif

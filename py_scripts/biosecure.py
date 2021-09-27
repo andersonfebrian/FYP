@@ -43,7 +43,7 @@ def face_alignment(img_src):
 
     image_copy = img_src.copy()
 
-    _, eye_roi = detection(image_copy, haar_cascade(cascade=HAAR_EYE))
+    _, eye_roi = detection(image_copy, haar_cascade(cascade=HAAR_EYE_GLASSES))
 
     eyes = eye_roi[:2]
 
@@ -209,8 +209,7 @@ def predict(trained_recognizer, image_src):
     label, confidence = trained_recognizer.predict(image_src)
     return label, confidence
 
-def biosecure():
-
+def register():
     testing, training = split()
 
     process_raw_data(training)
@@ -246,12 +245,51 @@ def biosecure():
         print('{"message":"error", "status":400}')
     # https://docs.opencv.org/4.5.0/dd/d65/classcv_1_1face_1_1FaceRecognizer.html#ab0d593e53ebd9a0f350c989fcac7f251
 
+def login():
+    #Todo: Duplicate code
+    face_recognizer = train_recognizer()
+
+    testing, _ = split()
+
+    process_raw_data(testing, processed_folder="testing")
+
+    testing_data, path = load_testing_data()
+
+    test_image_confidence_counter = 0
+
+    for index, testing in enumerate(testing_data):
+        try:
+
+            label, confidence = predict(face_recognizer, testing)
+            #print(f"{index} - {confidence}")
+
+            if confidence > 25:
+                remove_raw_frame(path[index])
+            else:
+                test_image_confidence_counter+=1
+                move_to_training(path[index])
+            
+        except Exception as e:
+            pass
+    #print(test_image_confidence_counter)
+    if test_image_confidence_counter >= 1:
+        print('{"message":"success", "status":200}')
+    else:
+        print('{"message":"error", "status":400}')
+
+def biosecure():
+    if sys.argv[1] == "register":
+        register()
+
+    if sys.argv[1] == "login":
+        login()
+
+    if sys.argv[1] == "forget-password":
+        login()
+
 def main():
     biosecure()
-    pass
-
-    #print('{"message":"hello"}',end="")
-    
+    pass    
 
 if __name__ == "__main__":
     main()
