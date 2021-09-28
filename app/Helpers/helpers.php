@@ -58,3 +58,9 @@ if (!function_exists(('base64_to_image'))) {
     return $data;
   }
 }
+
+if(!function_exists('auth_user')) {
+  function auth_user() {
+    return Auth::user();
+  }
+}
