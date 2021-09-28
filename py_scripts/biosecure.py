@@ -142,6 +142,8 @@ def process_raw_data(raw_image_data:list, processed_folder = "training"):
 
                 #concat_hor = np.concatenate((original_cropped, aligned_cropped), axis=1)
 
+                cv.normalize(aligned_cropped, aligned_cropped, 0, 255, cv.NORM_MINMAX)
+
                 cv.imwrite(os.path.join(sys.argv[3] + f"\\{processed_folder}\\", os.path.basename(image)), aligned_cropped)
 
                 #cv.imshow(f"{index}", concat_hor)
@@ -219,8 +221,6 @@ def register():
 
 
     testing_data, path = load_testing_data()
-
-    # name = ["", "Anderson Febrian"]
 
     test_image_confidence_counter = 0
 
