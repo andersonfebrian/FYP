@@ -25,7 +25,6 @@ class BiosecureController extends Controller
 	}
 
 	public function initScript(Request $request) {
-		logger($request);
 
 		$user = strtolower($request->user['first_name'].'_'.strtolower($request->user['last_name'].'_'.$request->email));
 		$process = new Process([env('PYTHON_DIR'), base_path('py_scripts\\biosecure.py'), $request->from, base_path(), storage_path('app\\biosecure\\'.$user)]);
@@ -37,7 +36,7 @@ class BiosecureController extends Controller
 			return response()->json(['message' => 'Something went wrong on our end. Please try again later.'], 500);
 		}
 
-		// //logger($process->getOutput());
+		//logger($process->getOutput());
 
 		$data = $process->getOutput();
 		$data = json_decode($data, true);

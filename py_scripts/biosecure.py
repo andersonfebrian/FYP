@@ -263,7 +263,7 @@ def login():
             label, confidence = predict(face_recognizer, testing)
             #print(f"{index} - {confidence}")
 
-            if confidence > 25:
+            if confidence > 32:
                 remove_raw_frame(path[index])
             else:
                 test_image_confidence_counter+=1
