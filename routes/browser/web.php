@@ -18,7 +18,7 @@ Route::middleware(['browser.auth'])->group(function() {
 
   // Profile
   Route::get('profile', 'ProfileController@index')->name('profile');
-  Route::get('profile/edit', 'ProfileController@edit')->name('profile.show');
+  Route::get('profile/edit', 'ProfileController@edit')->name('profile.edit');
 
   Route::put('profile/{user}/update', 'ProfileController@update')->name('profile.update');  
   

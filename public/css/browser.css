@@ -17491,3 +17491,9 @@ input[type=number] {
 .card-img-top {
   height: 10rem !important;
 }
+
+.profile-image {
+  height: 10rem !important;
+  width: 10rem !important;
+  border-radius: 50% !important;
+}

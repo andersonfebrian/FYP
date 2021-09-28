@@ -141,10 +141,11 @@ def process_raw_data(raw_image_data:list, processed_folder = "training"):
                 original_cropped = img_copy[y2:y2+h2, x2:x2+w2]
 
                 #concat_hor = np.concatenate((original_cropped, aligned_cropped), axis=1)
+                resized = cv.resize(aligned_cropped, (300, 300), interpolation=cv.INTER_LINEAR)
 
-                cv.normalize(aligned_cropped, aligned_cropped, 0, 255, cv.NORM_MINMAX)
+                cv.normalize(resized, resized, 0, 255, cv.NORM_MINMAX)
 
-                cv.imwrite(os.path.join(sys.argv[3] + f"\\{processed_folder}\\", os.path.basename(image)), aligned_cropped)
+                cv.imwrite(os.path.join(sys.argv[3] + f"\\{processed_folder}\\", os.path.basename(image)), resized)
 
                 #cv.imshow(f"{index}", concat_hor)
 
@@ -263,7 +264,7 @@ def login():
             label, confidence = predict(face_recognizer, testing)
             #print(f"{index} - {confidence}")
 
-            if confidence > 32:
+            if confidence > 33:
                 remove_raw_frame(path[index])
             else:
                 test_image_confidence_counter+=1

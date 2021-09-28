@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function() {
+    dd('admin index');
+});
+
 //Route::get('/', 'PageController@index')->name('index');
