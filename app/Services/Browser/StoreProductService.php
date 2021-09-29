@@ -3,8 +3,10 @@
 namespace App\Services\Browser;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class StoreProductService
 {
@@ -13,7 +15,7 @@ class StoreProductService
 	{
 		$product = $request->validated();
 
-		Product::create([
+		$product = Product::create([
 			'name' => $product['name'],
 			'price' => $product['price'],
 			'currency' => $product['currency'],
@@ -23,6 +25,18 @@ class StoreProductService
 			'is_public' => isset($product['is_public']) ? $product['is_public'] : false,
 			'store_id' => user_store()->id
 		]);
+
+		if(isset($request->image)) {
+			foreach($request->image as $image) {
+				Storage::disk('local')->move("/tmp/{$image}", "/public/{$image}");
+				ProductImage::create([
+					'product_id' => $product->id,
+					'image_path' => $image
+				]);
+			}
+		}
+
+		
 
 		Session::flash('success', 'Successfully Added Product.');
 

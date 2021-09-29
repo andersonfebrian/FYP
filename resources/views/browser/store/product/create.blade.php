@@ -9,7 +9,7 @@
 
     <h1>Add Product</h1>
 
-    <form action="{{ route('browser.products.store') }}" method="POST">
+    <form action="{{ route('browser.products.store') }}" enctype="multipart/form-data" method="POST">
       @csrf
       @method('POST')
       <div>
@@ -35,6 +35,11 @@
       </div>
 
       <div class="mt-2">
+        <label for="">Product Image</label>
+        <div class="dropzone" id="multiUpload"></div>
+      </div>
+
+      <div class="mt-2">
         <label for="description">Product Description</label>
         <textarea name="description" id="editor">{{ old('description') }}</textarea>
       </div>
@@ -51,3 +56,52 @@
 
   </div>
 @endsection
+
+@push('scripts')
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        let mapData = {}
+
+        let dropzone = new Dropzone('div#multiUpload', {
+          maxFileSize: 2,
+          type: "POST",
+          url: "{{ route('browser.test') }}",
+          headers: {
+            'X-CSRF-TOKEN' : "{{ csrf_token() }}"
+          },
+          addRemoveLinks: true,
+          acceptedFiles: "image/*",
+          success: function (file, response) {
+            console.log(response);
+            if (file.previewElement) {
+              file.previewElement.classList.add("dz-success");
+            }
+            $('form').append('<input type="hidden" name="image[]" value="' + response.name + '">');
+            mapData[file.name] = response.name;
+          },
+          removedfile: function (file) {
+            let file_name = mapData[file.name];
+            file.previewElement.remove();
+            axios.post(route('browser.test.remove'), {
+              'file': file_name
+            });
+            $('form').find('input[name="image[]"][value="' + file_name + '"]').remove();
+          },
+          error: function (file, message) {
+            if (file.previewElement) {
+              file.previewElement.classList.add("dz-error");
+              if (typeof message !== "string" && message.error) {
+                message = message.error;
+              }
+              for (let node of file.previewElement.querySelectorAll(
+                "[data-dz-errormessage]"
+              )) {
+                node.textContent = "Image Upload Error";
+              }
+            }
+          },
+        });
+    });
+  </script>
+@endpush

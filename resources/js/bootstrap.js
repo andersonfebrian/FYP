@@ -3,6 +3,10 @@ window._ = require('lodash');
 window.Swal = require('sweetalert2');
 window.ckeditor = require('@ckeditor/ckeditor5-build-classic');
 
+import Dropzone from 'dropzone';
+
+Dropzone.autoDiscover = false;
+
 require('@fortawesome/fontawesome-free/js/all');
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -19,7 +23,6 @@ try {
 } catch (e) {}
 
 ckeditor.create(document.querySelector('#editor')).then((editor) => {
-    console.log(editor);
 }).catch((err) => {
 });
 

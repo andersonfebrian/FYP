@@ -1,7 +1,7 @@
 @extends('browser.layouts.master')
 
 @section('meta-title')
-
+    <title>{{ $product->name . ' - ' . config('app.name') }}</title>
 @endsection
 
 @section('content')
@@ -11,15 +11,15 @@
                 <div id="image-slider" class="splide h-100 border border-dark">
                     <div class="splide__track h-100">
                         <div class="splide__list h-100">
-                            <div class="splide__slide h-100">
-                                <img src="{{ asset('images/product1.png') }}">
-                            </div>
-                            <div class="splide__slide h-100">
-                                <img src="{{ asset('images/product2.png') }}">
-                            </div>
-                            <div class="splide__slide h-100">
-                                <img src="{{ asset('images/banner.png') }}">
-                            </div>
+                            @forelse ($product->product_images as $product_image)
+                                <div class="splide__slide h-100">
+                                    <img src="{{ asset("storage/{$product_image->image_path}") }}">
+                                </div>
+                            @empty
+                                <div class="splide__slide h-100">
+                                    <img src="{{ asset("images/no-img.jpg") }}">
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
             <h1>
                 Recommended Product from Store
             </h1>
-            <div class="container bg-white w-100 h-25 rounded rounded-3 border border-dark">
+            <div class="container bg-white w-100 h-25 rounded rounded-3 shadow">
                 <div class="row h-100">
                     <div class="col-3">
                         <div class="row">
@@ -87,22 +87,22 @@
                         <div id="product-slider" class="splide h-100">
                             <div class="splide__track h-100">
                                 <div class="splide__list h-100">
-                                    <div class="splide__slide border border-dark rounded-3 d-flex justify-content-center align-items-center m-2">
+                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
                                         <p>item 1</p>
                                     </div>
-                                    <div class="splide__slide border border-dark rounded-3 d-flex justify-content-center align-items-center m-2">
+                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
                                         <p>item 2</p>
                                     </div>
-                                    <div class="splide__slide border border-dark rounded-3 d-flex justify-content-center align-items-center m-2">
+                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
                                         <p>item 3</p>
                                     </div>
-                                    <div class="splide__slide border border-dark rounded-3 d-flex justify-content-center align-items-center m-2">
+                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
                                         <p>item 4</p>
                                     </div>
-                                    <div class="splide__slide border border-dark rounded-3 d-flex justify-content-center align-items-center m-2">
+                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
                                         <p>item 5</p>
                                     </div>
-                                    <div class="splide__slide border border-dark rounded-3 d-flex justify-content-center align-items-center m-2">
+                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
                                         <p>item 6</p>
                                     </div>
                                 </div>

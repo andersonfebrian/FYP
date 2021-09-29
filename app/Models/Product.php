@@ -10,24 +10,31 @@ class Product extends Model
 {
 	use HasFactory;
 
-	public static function boot(){
+	public static function boot()
+	{
 		parent::boot();
 
-		static::created(function($product) {
+		static::created(function ($product) {
 			Activity::create([
 				'user_id' => Auth::id(),
 				'activity' => 'product.created',
 			]);
 		});
 
-		static::deleted(function(){
+		static::deleting(function($product) {
+			foreach($product->product_images as $data) {
+				$data->delete();
+			}
+		});
+
+		static::deleted(function () {
 			Activity::create([
 				'activity' => 'product.deleted',
 				'user_id' => Auth::id(),
 			]);
 		});
 
-		static::updated(function($product) {
+		static::updated(function ($product) {
 			Activity::create([
 				'activity' => 'product.updated',
 				'user_id' => Auth::id(),
@@ -55,5 +62,10 @@ class Product extends Model
 	public function store()
 	{
 		return $this->belongsTo('App\Models\Store');
+	}
+
+	public function product_images()
+	{
+		return $this->hasMany('App\Models\ProductImage');
 	}
 }
