@@ -14,7 +14,7 @@
                   <img src="{{ asset('images/banner.png') }}" alt="Placeholder Banner" class="h-100 w-100">
               </div>
               <div class="splide__slide d-flex justify-content-center align-items-center">
-                  <p>item 2</p>
+                  <img src="" alt="banner">
               </div>
               <div class="splide__slide d-flex justify-content-center align-items-center">
                   <p>item 3</p>

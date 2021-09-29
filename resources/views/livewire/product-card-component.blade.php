@@ -1,4 +1,4 @@
-<div class="border border-dark rounded-3 m-2">
+<div class="shadow rounded-3 m-2">
 	<div class="card rounded-3">
 		<img class="card-img-top rounded-top-right-3 rounded-top-left-3" src="{{ asset('images\banner.png') }}" alt="">
 		<div class="card-body p-3">
