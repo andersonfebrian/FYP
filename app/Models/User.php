@@ -87,4 +87,8 @@ class User extends Authenticatable
 	public function hasStore() {
 		return isset($this->store);
 	}
+
+	public function cart() {
+		return $this->hasOne('App\Models\Cart');
+	}
 }

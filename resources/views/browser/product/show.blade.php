@@ -41,7 +41,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button class="btn btn-secondary form-control"><i class="fas fa-cart-plus"></i> Add To Cart</button>
+                            @livewire('add-to-cart-component', ['product' => $product])
                         </div>
                         <div class="col">
                             <button class="btn btn-primary form-control">Buy Now</button>
