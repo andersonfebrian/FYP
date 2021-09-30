@@ -16,18 +16,6 @@
               <div class="splide__slide d-flex justify-content-center align-items-center">
                   <img src="" alt="banner">
               </div>
-              <div class="splide__slide d-flex justify-content-center align-items-center">
-                  <p>item 3</p>
-              </div>
-              <div class="splide__slide d-flex justify-content-center align-items-center">
-                  <p>item 4</p>
-              </div>
-              <div class="splide__slide d-flex justify-content-center align-items-center">
-                  <p>item 5</p>
-              </div>
-              <div class="splide__slide d-flex justify-content-center align-items-center">
-                  <p>item 6</p>
-              </div>
           </div>
       </div>
     </div>

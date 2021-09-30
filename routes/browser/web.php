@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['browser.auth'])->group(function() {
+  // Cart
+  Route::get('cart', 'CartController@show')->name('cart');
 
   // Profile
   Route::get('profile', 'ProfileController@index')->name('profile');

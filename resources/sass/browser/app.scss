@@ -99,3 +99,14 @@ input[type=number] {
   width: 10rem !important;
   border-radius: 50% !important;
 }
+
+.cart-badge-icon {
+  position: absolute;
+  background-color: #5fafff;
+  border-radius: 50%;
+  width: 1.025rem;
+  height: 1.025rem;
+  font-size: 12px;
+  right: .375rem;
+  top: -.15rem;
+}

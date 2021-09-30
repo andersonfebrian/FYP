@@ -11,7 +11,12 @@
     <div class="ml-auto">
       <div class="row">
         <div class="col d-flex align-items-center">
-          <a href="#"><i class="fa fa-shopping-cart fa-lg" style="color: #fff"></i></a>
+          @auth
+            @if(isset(auth_user()->cart) && count(auth_user()->cart->cart_products) > 0)
+              <span class="cart-badge-icon d-flex justify-content-center text-white">{{ count(auth_user()->cart->cart_products) }}</span>
+            @endif
+          @endauth
+          <a href="{{ route('browser.cart') }}"><i class="fa fa-shopping-cart fa-lg" style="color: #fff"></i></a>
         </div>
         <div class="col">
           @auth
