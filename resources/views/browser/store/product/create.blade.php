@@ -66,7 +66,7 @@
         let dropzone = new Dropzone('div#multiUpload', {
           maxFileSize: 2,
           type: "POST",
-          url: "{{ route('browser.test') }}",
+          url: "{{ route('browser.api.store-image') }}",
           headers: {
             'X-CSRF-TOKEN' : "{{ csrf_token() }}"
           },
@@ -79,11 +79,12 @@
             }
             $('form').append('<input type="hidden" name="image[]" value="' + response.name + '">');
             mapData[file.name] = response.name;
+            console.log(mapData);
           },
           removedfile: function (file) {
             let file_name = mapData[file.name];
             file.previewElement.remove();
-            axios.post(route('browser.test.remove'), {
+            axios.post(route('browser.api.remove-image'), {
               'file': file_name
             });
             $('form').find('input[name="image[]"][value="' + file_name + '"]').remove();
