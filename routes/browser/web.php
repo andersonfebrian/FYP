@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('test', 'TestController@test')->name('test');
-Route::post('temp/remove', 'TestController@removetemp')->name('test.remove');
-
 Route::middleware(['browser.auth'])->group(function() {
 
   // Profile

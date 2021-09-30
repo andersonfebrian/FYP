@@ -53,6 +53,31 @@ class StoreProductService
 			'is_public' => $data['is_public'] ?? false,
 		]);
 
+		if(isset($request->image)) {
+			$images = $product->product_images->pluck('image_path')->toArray();
+
+			foreach($request->image as $image) {
+				if(!in_array($image, $images)) {
+					Storage::disk('local')->move("/tmp/{$image}", "/public/{$image}");
+					ProductImage::create([
+						'product_id' => $product->id,
+						'image_path' => $image
+					]);
+				}
+			}
+
+			foreach($images as $image) {
+				if(!in_array($image, $request->image)) {
+					$product->product_images()->where('image_path', $image)->first()->delete();
+				}
+			}
+
+		} else {
+			foreach($product->product_images as $image) {
+				$image->delete();
+			}
+		}
+
 		Session::flash('success', 'Successfully Updated Product.');
 
 		return redirect()->route('browser.products.index');

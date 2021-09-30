@@ -9,7 +9,7 @@
 
 		<h1>Update Product</h1>
 		
-		<form action="{{ route('browser.products.update', ['product' => $product]) }}" method="POST">
+		<form action="{{ route('browser.products.update', ['product' => $product]) }}" method="POST" enctype="multipart/form-data">
 			@csrf
 			@method('PUT')
 
@@ -35,6 +35,11 @@
 				</div>
 			</div>
 
+			<div class="mt-2">
+				<label for="">Product Image</label>
+				<div class="dropzone" id="multiUpload"></div>
+			</div>
+
 			<div class="mt-3">
         <label for="description">Product Description</label>
 				<textarea name="description" id="editor">{{ $product->description }}</textarea>
@@ -52,3 +57,76 @@
 
 	</div>
 @endsection
+
+@push('scripts')
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			
+			let mapData = {}
+			let toDelete = []
+
+			let dropzone = new Dropzone('div#multiUpload', {
+				maxFileSize: 2,
+				type: "POST",
+				url: "{{ route('browser.api.store-image') }}",
+				headers: {
+					'X-CSRF-TOKEN' : "{{ csrf_token() }}"
+				},
+				addRemoveLinks: true,
+				acceptedFiles: "image/*",
+				success: function (file, response) {
+					console.log(response);
+					if (file.previewElement) {
+						file.previewElement.classList.add("dz-success");
+					}
+					$('form').append('<input type="hidden" name="image[]" value="' + response.name + '">');
+					mapData[file.name] = response.name;
+				},
+				removedfile: function (file) {
+					file.previewElement.remove();
+					// axios.post(route('browser.api.remove-image', {
+					// 	'file': file.name,
+					// 	'update' : 1
+					// }));
+					$('form').find('input[name="image[]"][value="' + file.name + '"]').remove();
+				},
+				error: function (file, message) {
+					if (file.previewElement) {
+						file.previewElement.classList.add("dz-error");
+						if (typeof message !== "string" && message.error) {
+							message = message.error;
+						}
+						for (let node of file.previewElement.querySelectorAll(
+							"[data-dz-errormessage]"
+						)) {
+							node.textContent = "Image Upload Error";
+						}
+					}
+				},
+				init: function () {
+					axios.get(route('browser.api.product-images', {
+						product: "{{ $product->id }}"
+					})).then(
+						(res) => {
+							console.log(res.data.images);
+							res.data['images'].forEach((data) => {
+								let mockFile = {
+									name: data.name,
+									size: data.size
+								}
+
+								dropzone.displayExistingFile(mockFile, "{{ asset("") }}" + data.path);	
+
+								$('form').append('<input type="hidden" name="image[]" value="' + data.name + '">');
+
+								mapData[data.original_name] = data.name;
+							});
+							console.log(mapData);
+						},
+						(err) => {}
+					);
+				}
+			});
+		});
+	</script>
+@endpush

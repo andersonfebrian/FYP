@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('biosecure/image-processing', 'API\BiosecureController@initScript')->name('biosecure.image-processing');
 
 Route::post('biosecure/store-frame', 'API\BiosecureController@storeFrame')->name('biosecure.store-frame');
+
+Route::post('image/store', 'API\ProductImageController@store')->name('store-image');
+Route::post('image/remove', 'API\ProductImageController@remove')->name('remove-image');
+Route::get('{product}/images', 'API\ProductImageController@retrieve')->name('product-images');
