@@ -17,7 +17,6 @@ class CreatePurchasesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

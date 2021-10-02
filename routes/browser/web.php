@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['browser.auth'])->group(function() {
+  // Payment
+  Route::get('payment', 'PaymentController@show')->name('payment.show');
+
   // Cart
   Route::get('cart', 'CartController@show')->name('cart');
 
