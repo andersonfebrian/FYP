@@ -18,14 +18,15 @@
       </div>
       
       <div class="row mt-2 mb-2">
-        <datalist id="currencies">
+        {{-- <datalist id="currencies">
           @foreach($currencies as $currency) 
             <option value="{{ $currency['id'] }}" >{{ $currency['id'] . ' - ' . $currency['value'] }}</option>
           @endforeach
-        </datalist>
+        </datalist> --}}
         <div class="col-2">
           <label for="currency">Currency</label>
-          <input type="text" list="currencies" name="currency" class="form-control" placeholder="Currency" required value="{{ old('currency') }}">
+          <input type="text" name="currency" value="MYR" placeholder="Currency" readonly class="form-control">
+          {{-- <input type="text" list="currencies" name="currency" class="form-control" placeholder="Currency" required value="{{ old('currency') }}"> --}}
         </div>
 
         <div class="col">

@@ -11,7 +11,10 @@ class Transaction extends Model
 
 	protected $fillable = [
 		'transaction_id',
-		'total_price'
+		'total_price',
+		'user_id',
+		'payment_status',
+		'payment_intent_id'
 	];
 
 	public function purchases()
@@ -19,7 +22,7 @@ class Transaction extends Model
 		return $this->hasMany('App\Models\Purchase');
 	}
 
-	public function owner()
+	public function user()
 	{
 		return $this->belongsTo('App\Models\User');
 	}

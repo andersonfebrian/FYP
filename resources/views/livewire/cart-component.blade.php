@@ -1,4 +1,5 @@
 <div class="container">
+    @include('browser.layouts.partials.messages')
     <div class="w-100 d-flex justify-content-center mt-2">
         <h2 class="m-0">Shopping Cart</h2>
     </div>
@@ -35,10 +36,18 @@
                 </div>
             </div>
         @endforeach
-            
-        <div class="row shadow border rounded mt-3" style="height: 3.5rem;">
-            <div class="col d-flex justify-content-end align-items-center">
-                <button class="btn btn-sm btn-success">Check Out</button>
+        <div class="row rounded border mt-3 d-flex justify-content-end">
+            <div class="col-3 d-flex justify-content-end">
+                <p><b>Total Price</b></p>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row shadow border rounded mt-3 d-flex justify-content-end" style="height: 3.5rem;">
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <p><b>MYR</b> {{ $total_price }}</p>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <a href="{{ route('browser.payment.show') }}" class="btn btn-sm btn-success">Proceed To Payment</a>
             </div>
         </div>
     @else

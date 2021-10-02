@@ -49,11 +49,11 @@ input[type=number] {
 
 .loader {
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #3d4849;
+  border-top: 5px solid #3490dc;
   border-radius: 50%;
   width: 25px;
   height: 25px;
-  animation: spin 2s linear infinite;
+  animation: spin 1.5s linear infinite;
 }
 
 @keyframes spin {

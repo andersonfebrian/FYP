@@ -9,6 +9,11 @@ class Purchase extends Model
 {
 	use HasFactory;
 
+	protected $fillable = [
+		'product_id',
+		'transaction_id'
+	];
+
 	public function product()
 	{
 		return $this->belongsTo('App\Models\Product');

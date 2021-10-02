@@ -17,6 +17,8 @@ class CreateTransactionsTable extends Migration
 			$table->id();
 			$table->string('transaction_id');
 			$table->double('total_price')->nullable()->default(0.0);
+			$table->string('payment_intent_id');
+			$table->string('payment_status')->default('pending');
 			$table->unsignedBigInteger('user_id')->nullable();
 			$table->timestamps();
 		});
