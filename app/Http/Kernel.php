@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'browser.auth' => \App\Http\Middleware\Browser\Authenticate::class,
         'has.store' => \App\Http\Middleware\Browser\HasStore::class,
+        'admin.auth' => \App\Http\Middleware\Admin\Authenticate::class
     ];
 }

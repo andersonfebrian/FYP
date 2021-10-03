@@ -13,8 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function() {
-    dd('admin index');
+Route::middleware(['admin.auth'])->group(function() {
+    
+    Route::get('/', 'PageController@index')->name('index');
+
+    Route::get('logout', 'AuthController@logout')->name('logout');
+
+    Route::get('users', 'PageController@users')->name('users.show');
+    Route::get('stores', 'PageController@stores')->name('stores.show');
+    Route::get('products', 'PageController@products')->name('products.show');
 });
 
-//Route::get('/', 'PageController@index')->name('index');
+Route::middleware('guest')->group(function() {
+    Route::get('login', 'AuthController@show')->name('login.show');
+    Route::post('login', 'AuthController@login')->name('login');
+});

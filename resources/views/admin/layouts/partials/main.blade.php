@@ -1,12 +1,14 @@
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  @include('admin.layouts.partials.meta')
-</head>
-<body>
-  
+  <head>
+    @include('admin.layouts.partials.meta')
+  </head>
+  <body>
+    
+    <div class="position-relative">
+      @yield('master')
+    </div>
 
-  @yield('master')
-
-  @include('admin.layouts.partials.scripts')
-</body>
+    @include('admin.layouts.partials.scripts')
+  </body>
 </html>

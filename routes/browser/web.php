@@ -50,6 +50,8 @@ Route::middleware('guest')->group(function(){
   Route::get('forget-password', 'ForgetPasswordController@forget')->name('forget.show');
 });
 
+Route::get('store/{store}', 'StoreController@show')->name('store.show');
+
 Route::resource('product', 'ProductController')->name('*', 'product');
 
 Route::get('product-page')->name('product-page');
