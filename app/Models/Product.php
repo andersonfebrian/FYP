@@ -72,4 +72,8 @@ class Product extends Model
 	public function cart_product() {
 		return $this->belongsToMany('App\Models\CartProduct');
 	}
+
+	public function product_reviews() {
+		return $this->hasMany('App\Models\ProductReview');
+	}
 }

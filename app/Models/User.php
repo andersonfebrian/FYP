@@ -63,6 +63,10 @@ class User extends Authenticatable
 		'email_verified_at' => 'datetime',
 	];
 
+	public function reviews() {
+		return $this->hasMany('App\Models\ProductReview');
+	}
+
 	public function activities() {
 		return $this->hasMany('App\Models\Activity');
 	}

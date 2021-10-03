@@ -37,6 +37,9 @@ Route::middleware(['browser.auth'])->group(function() {
     Route::resource('store-dashboard/products', 'StoreDashboardProductController')->name('*', 'product');
   });
 
+  Route::get('product-review/{purchase}', 'ProductReviewController@show')->name('product-review.show');
+  Route::post('product-review', 'ProductReviewController@store')->name('product-review.store');
+
   Route::get('logout', 'AuthController@logout')->name('logout');
 });
 

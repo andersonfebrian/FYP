@@ -51,6 +51,43 @@
             </div>
         </div>
         <div class="col mt-4">
+            <h3><b>Ratings & Review</b></h3>
+            @if(count($product->product_reviews) == 0)
+                <div class="d-flex justify-content-center">
+                    <p>NO RATINGS AND REVIEW FOR THIS PRODUCT YET...</p>
+                </div>
+            @else
+                <div class="row">
+                    @foreach ($product->product_reviews as $review)
+                        <div class="col-4 mt-2 border shadow-sm rounded-3">
+                            <div class="row">
+                                <div class="col-2 d-flex">
+                                    <span class="fa fa-star star-color" style="margin-top: 0.2rem !important;"></span>
+                                    <p><b>{{ $review->rating }}</b></p>
+                                </div>
+                                <div class="col">
+                                    <p><b>Reviewed By: </b> {{ $review->user->full_name }}</p>
+                                </div>
+                            </div>
+                            @if(isset($review->review))
+                                <div class="row">
+                                    <div class="col d-flex">
+                                        {{ $review->review }}
+                                    </div>
+                                </div>
+                            @else
+                                <div class="row">
+                                    <div class="col d-flex">
+                                        <p>No review provided</p>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+        <div class="col mt-4">
             <h3><b>Product Description</b></h3>
             {!! $product->description !!}
         </div>
