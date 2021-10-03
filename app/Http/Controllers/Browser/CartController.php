@@ -12,7 +12,7 @@ class CartController extends Controller
     private const PATH = "browser.cart.";
 
     public function show() {
-        $randomProducts = Product::where('is_public', 1)->inRandomOrder()->limit(10)->get();
+        $randomProducts = Product::where('is_public', 1)->whereNotIn('id', auth_user()->cart->cart_products->pluck('product_id'))->inRandomOrder()->limit(10)->get();
 
         return view(self::PATH . 'show', [
             'products' => $randomProducts,

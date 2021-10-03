@@ -11,7 +11,8 @@ class Purchase extends Model
 
 	protected $fillable = [
 		'product_id',
-		'transaction_id'
+		'transaction_id',
+		'is_reviewed'
 	];
 
 	public function product()

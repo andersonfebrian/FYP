@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="container mt-4">
+
+        @include('browser.layouts.partials.messages')
+
         <div class="d-flex justify-content-center">
             <h2>Purchase History</h2>
         </div>
@@ -41,7 +44,13 @@
                                     <td></td>
                                     <td>{{ $purchase->product->name }}</td>
                                     <td>MYR {{ $purchase->product->price }}</td>
-                                    <td><button>Review</button></td>
+                                    <td>
+                                        @if($purchase->is_reviewed)
+                                            <p>Product Reviewed</p>
+                                        @else
+                                            <a href="{{ route('browser.product-review.show', ['purchase' => $purchase]) }}">Review</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tr>
