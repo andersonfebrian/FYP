@@ -87,24 +87,11 @@
                         <div id="product-slider" class="splide h-100">
                             <div class="splide__track h-100">
                                 <div class="splide__list h-100">
-                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
-                                        <p>item 1</p>
-                                    </div>
-                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
-                                        <p>item 2</p>
-                                    </div>
-                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
-                                        <p>item 3</p>
-                                    </div>
-                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
-                                        <p>item 4</p>
-                                    </div>
-                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
-                                        <p>item 5</p>
-                                    </div>
-                                    <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
-                                        <p>item 6</p>
-                                    </div>
+                                    @foreach($recommended as $key => $product)
+                                        <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
+                                            <a href="{{ route('browser.product.show', ['product' => $product]) }}">{{ $key . '. ' . $product->name }}</a>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
