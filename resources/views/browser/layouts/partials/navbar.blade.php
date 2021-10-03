@@ -27,6 +27,7 @@
               <div class="dropdown-menu dropdown-menu-right mt-2" aria-labelledby="dropdown-button">
                 <a class="dropdown-item" href="{{ route('browser.profile') }}"><span class="fa fa-user"></span> Profile</a>
                 <a class="dropdown-item" href="{{ route('browser.store-dashboard') }}"><span class="fas fa-store-alt"></span> Store</a>
+                <a class="dropdown-item" href="{{ route('browser.purchase-history') }}"><span class=""></span> Purchase History</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('browser.logout') }}"><i class="fa fa-sign-out-alt"></i> Logout</a>
               </div>

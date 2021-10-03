@@ -59,6 +59,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="alert alert-danger mt-4">
+            <p><b>WARNING:</b> DO NOT USE YOUR REAL LIFE CREDIT/DEBIT CARD! THE FOLLOWING ARE TEST CARDS YOU CAN USE!</p>
+            <ul>
+                <li>
+                    <b>Successful:</b> 4242 4242 4242 4242
+                </li>
+                <li>
+                    <b>With Error:</b> 4000 0000 0000 0002
+                </li>
+            </ul>
+            <p><b>CVC</b> - any 3 digits</p>
+            <p><b>MM/YY</b> - any</p>
+        </div>
+
+        @include('browser.layouts.partials.messages')
     @elseif($state == 'success')
         <div class="row d-flex justify-content-center">
             <h1>Payment Successful</h1>
