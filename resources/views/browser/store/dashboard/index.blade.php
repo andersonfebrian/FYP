@@ -20,7 +20,7 @@
         </ul>
       </div>
       <div class="col">
-
+        <h3>Income since signup - <b>MYR </b> {{ $income }}</h3>
       </div>
     </div>
   </div>
