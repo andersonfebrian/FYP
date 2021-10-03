@@ -29,9 +29,9 @@ class Store extends Model
 		'user_id'
 	];
 
-	public function owner()
+	public function user()
 	{
-		return $this->hasOne('App\Models\User');
+		return $this->belongsTo('App\Models\User');
 	}
 
 	public function products()

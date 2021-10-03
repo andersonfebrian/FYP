@@ -40,7 +40,8 @@ class User extends Authenticatable
 		'last_name',
 		'email',
 		'password',
-		'biosecure_enabled'
+		'biosecure_enabled',
+		'is_admin'
 	];
 
 	/**

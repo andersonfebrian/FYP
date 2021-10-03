@@ -78,7 +78,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-secondary btn-sm">VISIT STORE</a>
+                                    <a href="{{ route('browser.store.show', ['store' => $product->store]) }}" class="btn btn-secondary btn-sm">VISIT STORE</a>
                                 </div>
                             </div>
                         </div>

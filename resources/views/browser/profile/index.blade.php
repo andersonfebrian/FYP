@@ -25,6 +25,9 @@
             <div class="mt-2">
               <p>Member Since: {{ auth_user()->created_at->diffForHumans() }}</p>
             </div>
+            @if(auth_user()->is_admin)
+              <a href="{{ route('admin.index') }}">Go to admin dashboard</a>
+            @endif
           </div>
         </div>
       </div>
