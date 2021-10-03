@@ -54,9 +54,8 @@
           </div>
           <div class="col p-0 rounded-3 shadow mr-2 ml-2" style="background-color: #e3e3e3;">
             <div class="h-100 d-flex justify-content-center align-items-center">
-              <a href="">
+              <a href="{{ route('browser.purchase-history') }}">
                 <p class="d-inline mr-2">Purchase History</p>
-                <span class="fas fa-external-link-alt"></span>
               </a>
             </div>
           </div>

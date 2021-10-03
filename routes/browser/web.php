@@ -18,6 +18,9 @@ Route::middleware(['browser.auth'])->group(function() {
   // Payment
   Route::get('payment', 'PaymentController@show')->name('payment.show');
 
+  // Purchase History
+  Route::get('purchase-history', 'PurchaseHistoryController@show')->name('purchase-history');
+
   // Cart
   Route::get('cart', 'CartController@show')->name('cart');
 

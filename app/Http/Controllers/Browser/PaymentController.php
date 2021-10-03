@@ -7,6 +7,7 @@ use App\Models\Purchase;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -59,6 +60,10 @@ class PaymentController extends Controller
 
                 return compact(['transaction']);
             });
+        }
+
+        if(isset($pending_transaction)) {
+            Session::flash('error', 'This is your previous transaction that didn\'t go through! Cancel this transaction to Proceed with new transaction!');
         }
 
         return view(self::PATH . 'show', ['transaction' => $result['transaction'] ?? $pending_transaction]);
