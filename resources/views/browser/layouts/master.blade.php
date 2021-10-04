@@ -6,4 +6,6 @@
 
   @yield('content')
 
+  @include('browser.layouts.partials.footer')
+  
 @endsection

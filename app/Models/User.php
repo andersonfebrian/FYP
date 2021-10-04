@@ -67,6 +67,10 @@ class User extends Authenticatable
 		return $this->hasMany('App\Models\ProductReview');
 	}
 
+	public function banners() {
+		return $this->hasMany('App\Models\Banner');
+	}
+
 	public function activities() {
 		return $this->hasMany('App\Models\Activity');
 	}

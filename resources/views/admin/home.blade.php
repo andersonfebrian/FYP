@@ -6,9 +6,10 @@
     <h1>Admin Home</h1>
 
     <ul>
-      <li><a href="{{ route('admin.users.show') }}">All Users</a></li>
-      <li><a href="{{ route('admin.stores.show') }}">All Stores</a></li>
-      <li><a href="{{ route('admin.products.show') }}">All Products</a></li>
+      <li><a href="{{ route('admin.users.index') }}">All Users</a></li>
+      <li><a href="{{ route('admin.stores.index') }}">All Stores</a></li>
+      <li><a href="{{ route('admin.products.index') }}">All Products</a></li>
+      <li><a href="{{ route('admin.banners.index') }}">Manage Site Banners</a></li>
     </ul>
 
     <ul>

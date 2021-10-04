@@ -45,11 +45,9 @@ class Product extends Model
 	protected $fillable = [
 		'name',
 		'currency',
-		'quantity',
 		'price',
 		'description',
 		'rating',
-		'brand',
 		'is_public',
 		'store_id'
 	];

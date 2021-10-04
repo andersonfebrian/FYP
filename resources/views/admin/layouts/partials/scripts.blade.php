@@ -1,2 +1,4 @@
-<script src="{{ mix("js/admin.js") }}"></script>
 @livewireScripts
+<script src="{{ mix("js/admin.js") }}"></script>
+
+@stack('scripts')

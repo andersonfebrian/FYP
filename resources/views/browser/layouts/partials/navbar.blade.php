@@ -4,8 +4,8 @@
     <div class="ml-auto mr-auto justify-content-center flex">
       <form class="d-flex m-0" action="{{ route('browser.search') }}" method="POST">
         @csrf
-        <input type="text" name="search" class="form-control" placeholder="Search Item...">
-        <button type="submit" class="btn btn-dark ml-2 text-white">Search</button>
+        <input id="search-input" type="text" name="search" class="form-control" placeholder="Search Item...">
+        <button id="search-btn" type="submit" class="btn btn-dark ml-2 text-white" disabled>Search</button>
       </form>
     </div>
     <div class="ml-auto">
@@ -41,3 +41,24 @@
     </div>
   </div>
 </nav>
+
+@push('scripts')
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      let searchButton = document.getElementById('search-btn');
+      let searchInput = document.getElementById('search-input');
+
+      searchInput.addEventListener('input', () => {
+        if(searchInput.value.length == 0) {
+          searchButton.disabled = true;
+        } else {
+          searchButton.disabled = false;
+        }
+      });
+
+    });
+  </script>
+
+@endpush

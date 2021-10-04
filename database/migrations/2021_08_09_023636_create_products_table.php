@@ -17,11 +17,9 @@ class CreateProductsTable extends Migration
 			$table->id();
 			$table->string('name');
 			$table->string('currency')->nullable();
-			$table->integer('quantity')->nullable()->default(0);
 			$table->double('price')->nullable()->default(0.0);
 			$table->longText('description')->nullable();
 			$table->double('rating', 10, 2)->nullable()->default(0.0);
-			$table->string('brand')->nullable();
 			$table->boolean('is_public')->nullable()->default(false);
 			$table->unsignedBigInteger('store_id')->nullable();
 			$table->timestamps();

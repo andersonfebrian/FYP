@@ -10,12 +10,11 @@
     <div id="product-slider" class="splide h-50 border border-dark">
       <div class="splide__track h-100">
           <div class="splide__list h-100">
+            @foreach ($banners as $banner)
               <div class="splide__slide d-flex justify-content-center align-items-center">
-                  <img src="{{ asset('images/banner.png') }}" alt="Placeholder Banner" class="h-100 w-100">
+                <img src="{{ asset("storage/$banner->banner_path") }}" alt="Placeholder Banner" class="h-100 w-100">
               </div>
-              <div class="splide__slide d-flex justify-content-center align-items-center">
-                  <img src="" alt="banner">
-              </div>
+            @endforeach
           </div>
       </div>
     </div>
@@ -23,13 +22,13 @@
 
   <div class="col">
     <div class="row h-100 no-gutters">
-      <div class="col-2 bg-dark m-2">
+      {{-- <div class="col-2 bg-dark m-2">
         <h1 class="text-white d-flex justify-content-center">SIDEBAR</h1>
-      </div>
+      </div> --}}
       <div class="col">
         <div class="row no-gutters mr-auto">
           @foreach ($products as $product)
-            <div class="col-3 m-auto">
+            <div class="col-3">
               @livewire('product-card-component', ['product' => $product])
             </div>
           @endforeach
