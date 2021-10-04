@@ -42,8 +42,8 @@
                             @foreach($transaction->purchases as $purchase) 
                                 <tr id="collapsible-{{ $key }}" class="collapse">
                                     <td></td>
-                                    <td>{{ $purchase->product->name }}</td>
-                                    <td>MYR {{ $purchase->product->price }}</td>
+                                    <td>{{ $purchase->product->name ?? 'failed to retrieve'}}</td>
+                                    <td>MYR {{ $purchase->product->price ?? 'failed to retrieve'}}</td>
                                     <td>
                                         @if($purchase->is_reviewed)
                                             <p>Product Reviewed</p>
