@@ -19,9 +19,11 @@ Route::middleware(['admin.auth'])->group(function() {
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 
-    Route::get('users', 'PageController@users')->name('users.show');
-    Route::get('stores', 'PageController@stores')->name('stores.show');
-    Route::get('products', 'PageController@products')->name('products.show');
+    Route::get('users', 'PageController@users')->name('users.index');
+    Route::get('stores', 'PageController@stores')->name('stores.index');
+    Route::get('products', 'PageController@products')->name('products.index');
+
+    Route::resource('banners', 'BannerController')->name('*', 'banners');
 });
 
 Route::middleware('guest')->group(function() {

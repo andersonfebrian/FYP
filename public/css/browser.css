@@ -17725,7 +17725,9 @@ text-white {
   color: white;
 }
 
-p, label, ul {
+p,
+label,
+ul {
   margin: 0;
 }
 
@@ -17828,4 +17830,10 @@ input[type=number] {
   font-size: 12px;
   right: 0.375rem;
   top: -0.15rem;
+}
+
+.footer {
+  position: relative;
+  clear: both;
+  margin-top: 10rem;
 }

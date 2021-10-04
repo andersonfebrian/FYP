@@ -6,7 +6,7 @@
 
 @section('content')
 
-  <div class="container mt-2">
+  <div class="container h-100 mt-2">
     <div class="col d-flex justify-content-center">
       <h1>Profile</h1>
     </div>
@@ -62,14 +62,14 @@
               </a>
             </div>
           </div>
-          <div class="col p-0 rounded-3 shadow mr-2 ml-2" style="background-color: #e3e3e3;">
+          {{-- <div class="col p-0 rounded-3 shadow mr-2 ml-2" style="background-color: #e3e3e3;">
             <div class="h-100 d-flex justify-content-center align-items-center">
               <a href="">
                 <p class="d-inline mr-2">Activity Log</p>
                 <span class="fas fa-external-link-alt"></span>
               </a>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>

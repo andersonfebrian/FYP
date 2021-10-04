@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-  <div class="container mt-2">
+  <div class="container h-100 mt-2">
     <h1>Store Dashboard</h1>
     <div class="row">
       <div class="col">

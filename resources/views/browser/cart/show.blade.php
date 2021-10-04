@@ -18,9 +18,9 @@
             <div id="product-slider" class="splide h-100">
                 <div class="splide__track h-100">
                     <div class="splide__list h-100">
-                        @foreach($products as $product)
+                        @foreach($products as $key=>$product)
                             <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
-                                <p>{{ $product->name }}</p>
+                                <a href="{{ route('browser.product.show', $product) }}">{{ $key+1 . '. ' . $product->name }}</a>
                             </div>
                         @endforeach
                     </div>

@@ -124,11 +124,15 @@
                         <div id="product-slider" class="splide h-100">
                             <div class="splide__track h-100">
                                 <div class="splide__list h-100">
-                                    @foreach($recommended as $key => $product)
+                                    @forelse($recommended as $key => $product)
                                         <div class="splide__slide shadow rounded-3 d-flex justify-content-center align-items-center m-2">
                                             <a href="{{ route('browser.product.show', ['product' => $product]) }}">{{ $key . '. ' . $product->name }}</a>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <div class="d-flex justify-content-center col align-items-center">
+                                            <p>No more products to show...</p>
+                                        </div>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
