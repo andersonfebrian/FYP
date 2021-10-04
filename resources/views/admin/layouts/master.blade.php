@@ -9,6 +9,7 @@
       <a href="{{ route('admin.stores.index') }}" class="m-2">ALL STORES</a>
       <a href="{{ route('admin.products.index') }}" class="m-2">ALL PRODUCTS</a>
       <a href="{{ route('admin.banners.index') }}" class="m-2">MANAGE BANNERS</a>
+      <a href="{{ route('admin.activity-logs.index') }}" class="m-2">VIEW LOGS</a>
     </div>
   @endif
 
