@@ -41,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
 		$this->configureRateLimiting();
 		$this->mapAdminRoute();
 		$this->mapBrowserRoute();
+		$this->mapRoute();
 	}
 
 	protected function mapBrowserRoute()
@@ -61,6 +62,14 @@ class RouteServiceProvider extends ServiceProvider
 			->namespace($this->adminNamespace)
 			->middleware('web')
 			->group(base_path('routes/admin/web.php'));
+	}
+
+	protected function mapRoute()
+	{
+		Route::domain(env('APP_URL'))
+			->namespace($this->browserNamespace)
+			->middleware('web')
+			->group(base_path('routes/web.php'));
 	}
 
 	/**

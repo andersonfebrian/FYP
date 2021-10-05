@@ -5,11 +5,6 @@
             <form wire:submit.prevent="accountExists">
                 <label for="email" class="mb-2">Email</label>
                 <input name="email" type="text" type="email" wire:model="email" placeholder="Email" class="form-control" required>
-                @error('email')
-                    <div class="alert alert-danger mt-2">
-                        <p>{{ $message }}</p>
-                    </div>
-                @enderror
                 @include('browser.layouts.partials.messages')
                 <div class="d-flex justify-content-end mt-2">
                     <button type="submit" class="btn btn-success form-control">Forget Password</button>
@@ -44,6 +39,10 @@
                     <button type="submit" class="btn btn-success form-control">Reset Password</button>
                 </div>
             </form>
+        </div>
+    @elseif($state == 'send_reset_password')
+        <div>
+            <p> We have sent an email to {{ $email }}, if the account exists in our database, you can reset your password with the given link</p>
         </div>
     @endif
 

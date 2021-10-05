@@ -50,7 +50,7 @@ Route::middleware('guest')->group(function(){
   Route::get('register', 'AuthController@register')->name('register.show');
   Route::post('register', 'RegisterController@register')->name('auth-register');
 
-  Route::get('forget-password', 'ForgetPasswordController@forget')->name('forget.show');
+  Route::get('forgot-password', 'ForgetPasswordController@showForgotPasswordForm')->name('password.request');
 });
 
 Route::get('store/{store}', 'StoreController@show')->name('store.show');
