@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Livewire\Component;
 
 class ForgetPasswordComponent extends Component
@@ -22,6 +23,10 @@ class ForgetPasswordComponent extends Component
     protected $listeners = ['refresh' => '$refresh', 'changeState'];
 
     public function accountExists() {
+        $this->validate([
+            'email' => 'required|email'
+        ]);
+        
         $this->user = User::where('email', $this->email)->first();
 
         if(!isset($this->user)) {
@@ -34,7 +39,10 @@ class ForgetPasswordComponent extends Component
         if($this->user['biosecure_enabled']) {
             return $this->changeState('biosecure_enabled');
         } else {
-            return $this->changeState('reset_password');
+
+            $status = Password::sendResetLink(['email' => $this->email]);
+
+            return $this->changeState('send_reset_password');
         }
     }
 

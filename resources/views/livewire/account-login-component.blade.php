@@ -13,7 +13,7 @@
 				<div class="row mt-2">
 					<div class="col">
 						<div class="d-flex justify-content-end">
-							<p class="mb-2 mt-2"><a href="{{ route('browser.forget.show') }}">Forgot Password?</a></p>
+							<p class="mb-2 mt-2"><a href="{{ route('browser.password.request') }}">Forgot Password?</a></p>
 						</div>
 					</div>
 					<div class="col">
