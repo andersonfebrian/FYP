@@ -18,6 +18,7 @@ class CreateBannersTable extends Migration
             $table->string('name');
             $table->string('banner_path');
             $table->boolean('is_viewable');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

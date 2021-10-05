@@ -21,7 +21,8 @@ class Banner extends Model
     protected $fillable = [
         'banner_path',
         'is_viewable',
-        'name'
+        'name',
+        'user_id'
     ];
 
     public function user() {

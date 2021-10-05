@@ -15,7 +15,11 @@ class CartController extends Controller
     public function show()
     {
         if (Auth::check() && isset(auth_user()->store)) {
-            $randomProducts = Product::where('is_public', 1)->whereNotIn('id', auth_user()->cart->cart_products->pluck('product_id'))->whereNotIn('id', auth_user()->store->products->pluck(['id']))->inRandomOrder()->limit(10)->get();
+            if(isset(auth_user()->cart->cart_products)) {
+                $randomProducts = Product::where('is_public', 1)->whereNotIn('id', auth_user()->cart->cart_products->pluck('product_id'))->whereNotIn('id', auth_user()->store->products->pluck(['id']))->inRandomOrder()->limit(10)->get();
+            } else {
+                $randomProducts = Product::where('is_public', 1)->whereNotIn('id', auth_user()->store->products->pluck(['id']))->inRandomOrder()->limit(10)->get();
+            }
         } else {
             if (!isset(auth_user()->cart->cart_products)) {
                 $randomProducts = Product::where('is_public', 1)->inRandomOrder()->limit(10)->get();
