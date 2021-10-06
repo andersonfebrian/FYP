@@ -11,6 +11,24 @@
 				@include('browser.layouts.partials.messages')
 
 				<div class="row mt-2">
+					<div class="col d-flex">
+						<p class="mr-2">Don't Have an Account? </p><a href="{{ route('browser.register.show') }}"> Register Here!</a>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col d-flex">
+						<p class="mr-2">Forgot Your Password? </p><a href="{{ route('browser.password.request') }}">Reset Here!</a>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col">
+						<button type="submit" class="btn btn-success form-control">Login</button>
+					</div>
+				</div>
+
+				{{-- <div class="row mt-2">
 					<div class="col">
 						<div class="d-flex justify-content-end">
 							<p class="mb-2 mt-2"><a href="{{ route('browser.password.request') }}">Forgot Password?</a></p>
@@ -27,7 +45,7 @@
 							<button type="submit" class="btn btn-success">Login</button>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 
 			</form>
 		</div>

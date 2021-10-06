@@ -5,16 +5,20 @@
 @endsection
 
 @section('content')
-    <div>
+    <div class="container">
         <h2>Login to Admin Dashboard</h2>
         <form action="{{ route('admin.login') }}" method="POST">
             @csrf
 
-            <input type="email" value="{{ old('email') }}" name="email" required placeholder="Email">
+            <div class="mt-2">
+                <input type="email" value="{{ old('email') }}" name="email" required placeholder="Email" class="form-control">
+            </div>
 
-            <input type="password" name="password" required placeholder="Password">
+            <div class="mt-2">
+                <input type="password" name="password" required placeholder="Password" class="form-control">
+            </div>
 
-            <button type="submit">Login</button>
+            <button type="submit" class="btn btn-success form-control mt-2">Login</button>
         </form>
 
         {{-- TODO: REPLACE THIS WITH ADMIN --}}

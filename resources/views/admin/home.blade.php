@@ -15,9 +15,9 @@
 
     <ul>
       <li><a href="{{ route('browser.index') }}">VISIT MARKETPLACE</a></li>
+      <li> <a href="{{ route('admin.logout') }}">Logout</a></li>
     </ul>
 
-    <a href="{{ route('admin.logout') }}">Logout</a>
   </div>
 
 @endsection
