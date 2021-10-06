@@ -21,6 +21,7 @@
       </div>
       <div class="col">
         <h3>Income since signup - <b>MYR </b> {{ $income }}</h3>
+        <a href="{{ route('browser.store-dashboard.income.show') }}">View Products Sold</a>
       </div>
     </div>
   </div>
