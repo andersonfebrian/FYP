@@ -25,16 +25,16 @@
 					<p><b>WARNING:</b> ONLY USE PASSWORDS THAT YOU HAVE NOT USED FOR OTHER ACCOUNTS. THIS IS ONLY AN FYP PROJECT.</p>
 				</div>
 
+
+				<div class="row mt-2">
+					<div class="col d-flex">
+						<p class="mt-2 mb-2">Have an account? <a href="{{ route('browser.login.show') }}">Login Here</a></p>
+					</div>
+				</div>
+
 				<div class="row mt-2">
 					<div class="col">
-						<div class="d-flex justify-content-end">
-							<p class="mt-2 mb-2">Have an account? <a href="{{ route('browser.login.show') }}">Login Here</a></p>
-						</div>
-					</div>
-					<div class="col-2">
-						<div class="d-flex justify-content-end">
-							<button type="submit" class="btn btn-success">Register Account</button>
-						</div>
+						<button type="submit" class="btn btn-success form-control">Register Account</button>
 					</div>
 				</div>
 

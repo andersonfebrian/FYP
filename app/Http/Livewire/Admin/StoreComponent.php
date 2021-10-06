@@ -22,9 +22,10 @@ class StoreComponent extends Component
     
     public function render()
     {
+        $total_stores = count(Store::all());
 
-        $stores = Store::paginate(10);
+        $stores = Store::where('name', 'like', '%'.$this->search.'%')->paginate(10);
 
-        return view('livewire.admin.store-component', ['stores' => $stores]);
+        return view('livewire.admin.store-component', ['stores' => $stores, 'total_stores' => $total_stores]);
     }
 }

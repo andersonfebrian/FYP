@@ -5,7 +5,7 @@
   </head>
   <body>
     
-    <div class="position-relative">
+    <div class="position-relative h-100">
       @yield('master')
     </div>
 

@@ -9,7 +9,7 @@
 
         </div>
         <div class="col-4 d-flex justify-content-center">
-            <h4 class="m-0 mt-2"><b>Total Users: </b> {{ count($users) }}</h4>
+            <h4 class="m-0 mt-2"><b>Total Users: </b> {{ $total_users }}</h4>
         </div>
     </div>
 
