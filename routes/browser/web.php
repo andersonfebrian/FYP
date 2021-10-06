@@ -35,6 +35,8 @@ Route::middleware(['browser.auth'])->group(function() {
   Route::middleware(['has.store'])->group(function() {
     Route::get('store-dashboard', 'StoreDashboardController@index')->name('store-dashboard');
     Route::resource('store-dashboard/products', 'StoreDashboardProductController')->name('*', 'product');
+
+    Route::get('store-dashboard/income', 'StoreDashboardController@showIncome')->name('store-dashboard.income.show');
   });
 
   Route::get('product-review/{purchase}', 'ProductReviewController@show')->name('product-review.show');

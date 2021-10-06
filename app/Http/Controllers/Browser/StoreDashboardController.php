@@ -23,4 +23,19 @@ class StoreDashboardController extends Controller
 
 		return view('browser.store.dashboard.index', ['income' => $income]);
 	}
+
+	public function showIncome() {
+
+		$income_statement = Purchase::whereHas('transaction', function($query) {
+			$query->where('payment_status', 'succeeded');
+		})->whereIn('product_id', user_store()->products->pluck(['id']))->orderBy('created_at', 'desc')->get();
+
+		$income = 0.0;
+
+		foreach($income_statement as $product) {
+			$income += $product->product->price;
+		}
+
+		return view('browser.store.dashboard.income', ['income_statement' => $income_statement, 'total' => $income]);
+	}
 }
