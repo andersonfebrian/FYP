@@ -25,6 +25,9 @@ Route::middleware(['admin.auth'])->group(function() {
 
     Route::resource('banners', 'BannerController')->name('*', 'banners');
     Route::get('activity-logs', 'ActivityController@index')->name('activity-logs.index');
+
+    Route::get('transactions', 'PageController@transactions')->name('transactions.index');
+    Route::get('purchases', 'PageController@purchases')->name('purchases.index');
 });
 
 Route::middleware('guest')->group(function() {

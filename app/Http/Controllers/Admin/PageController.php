@@ -19,14 +19,22 @@ class PageController extends Controller
 	}
 
 	public function users() {
-		return view(self::PATH . 'pages.user.show');
+		return view(self::PATH . 'pages.user.index');
 	}
 
 	public function stores() {
-		return view(self::PATH . 'pages.store.show');
+		return view(self::PATH . 'pages.store.index');
 	}
 
 	public function products() {
-		return view(self::PATH . 'pages.product.show');
+		return view(self::PATH . 'pages.product.index');
+	}
+
+	public function transactions() {
+		return view(self::PATH . 'pages.transaction.index');
+	}
+
+	public function purchases() {
+		return view(self::PATH . 'pages.purchase.index');
 	}
 }

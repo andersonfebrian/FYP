@@ -10,6 +10,8 @@
       <a href="{{ route('admin.products.index') }}" class="m-2">ALL PRODUCTS</a>
       <a href="{{ route('admin.banners.index') }}" class="m-2">MANAGE BANNERS</a>
       <a href="{{ route('admin.activity-logs.index') }}" class="m-2">VIEW LOGS</a>
+      <a href="{{ route('admin.transactions.index') }}" class="m-2">VIEW TRANSACTIONS</a>
+      <a href="{{ route('admin.purchases.index') }}" class="m-2">VIEW PURCHASES</a>
     </div>
   @endif
 
