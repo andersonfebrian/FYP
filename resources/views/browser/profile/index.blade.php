@@ -10,6 +10,9 @@
     <div class="col d-flex justify-content-center">
       <h1>Profile</h1>
     </div>
+    <div class="col">
+      @include('browser.layouts.partials.messages')
+    </div>
     <div class="col mt-4">
       <div class="col p-0">
         <div class="row">
