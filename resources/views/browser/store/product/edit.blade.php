@@ -19,7 +19,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-2">
+				{{-- <div class="col-2">
 					<label for="currency">Currency</label>
 					<datalist id="currencies">
 						@foreach($currencies as $currency) 
@@ -27,6 +27,11 @@
 						@endforeach
 					</datalist>
 					<input type="text" list="currencies" name="currency" placeholder="Currency" class="form-control" value="{{ $product->currency }}">
+				</div> --}}
+
+				<div class="col-2">
+					<label for="currency">Currency</label>
+					<input type="text" name="currency" value="MYR" placeholder="Currency" readonly class="form-control">
 				</div>
 
 				<div class="col">

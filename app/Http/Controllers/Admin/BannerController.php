@@ -42,7 +42,8 @@ class BannerController extends Controller
         Banner::create([
             'name' => $request->name,
             'banner_path' => $filename,
-            'is_viewable' => $request->is_viewable ?? false
+            'is_viewable' => $request->is_viewable ?? false,
+            'user_id' => auth_user()->id
         ]);
 
         Session::flash('success', 'Successfully Created Banner!');

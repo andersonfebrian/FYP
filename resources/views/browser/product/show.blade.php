@@ -8,7 +8,7 @@
     <div class="container mt-4">
         <div class="col h-50">
             <div class="row h-100">
-                <div id="image-slider" class="splide h-100 border border-dark">
+                <div id="image-slider" class="splide w-50 h-100 border border-dark">
                     <div class="splide__track h-100">
                         <div class="splide__list h-100">
                             @forelse ($product->product_images as $product_image)

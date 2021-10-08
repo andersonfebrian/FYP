@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col">
                     <label for="rating">Rating</label>
-                    <input value="1" type="range" min="1" max="5" name="rating" oninput="this.nextElementSibling.value = this.value"> <output>1</output>
+                    <input value="5" type="range" min="1" max="5" name="rating" oninput="this.nextElementSibling.value = this.value"> <output>5</output>
                 </div>
             </div>
             <div class="row">
