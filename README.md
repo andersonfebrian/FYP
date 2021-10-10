@@ -9,7 +9,7 @@
 
 <h3>Setup Project Locally</h3>
 
-1. Clone Project to local machine (Preferably to <em>xampp/htdocs</em> folder) - `git clone `  
+1. Clone Project to local machine (Preferably to <em>xampp/htdocs</em> folder) - `git clone https://github.com/andersonfebrian/FYP.git`  
 2. Install Dependencies - `composer install` and `npm install` and `npm run dev`
 3. Create <em>.env</em> file - `cp .env.example .env`  
     3.1  
